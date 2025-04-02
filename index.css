@@ -1,0 +1,146 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1, h2 {
+    margin: 0;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+
+  /*------------------------ NAVBAR CSS ------------------------*/
+
+  .logo {
+    flex: 1;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .navbar {
+    display: flex;
+    flex: 3;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+  }
+  
+  .bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu {
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu a {
+    margin-right: 40px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  /* Search Bar Styles */
+  .search-bar {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    margin-right: 40px;
+  }
+  
+  .search-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  
+  .search-button {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 0;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    outline: none;
+    height: 100%;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .search-button img {
+    max-width: 100%; /* Adjust the width as needed */
+    max-height: 100%; /* Adjust the height as needed */
+    
+  }
+
+  .search-button:hover {
+    background: #ccc;
+  }
+  
+  .auth-buttons button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  
+
+  /* Hero Section */
+  .hero-section {
+    display: flex; /* Enables Flexbox layout */
+    align-items: center; /* Centers content vertically */
+    justify-content: space-between; 
+    background-color: #343a40;
+    text-align: end;
+    padding: 40px;
+    border-radius: 15px; /* Rounded corners */
+    margin: 40px; /* Adds spacing around the section */
+  }
+    
+  .hero-content {
+    display: flex; /* Flexbox for inner content */
+    width: 100%; /* Takes full width of the section */
+  }
+  
+  .hero-image {
+    flex: 0 0 60%; /* Fixes the width to 60% of the container */
+    max-width: 100%; /* Ensures it doesn't exceed its allocated space */
+    width: 100%; /* Ensures it fills its flex container */
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px; /* Optional rounded corners */
+  }
+  
+  .hero-text {
+    font-size: xx-large;
+    flex: 0 0 40%;
+    padding-left: 20px;
+  }
+  
+  .find-talent-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 20px;
+    border-radius: 10px; /* Rounded button corners */
+  }
+  
+  /* Categories Section */
+  .categories-section h2{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }  
+  
