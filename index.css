@@ -13,89 +13,6 @@ body {
     cursor: pointer;
   }
 
-  /*------------------------ NAVBAR CSS ------------------------*/
-
-  .logo {
-    flex: 1;
-    font-size: 24px;
-    font-weight: bold;
-  }
-
-  .navbar {
-    display: flex;
-    flex: 3;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #f8f9fa;
-  }
-  
-  .bar {
-    display: flex;
-    align-items: center;
-  }
-  
-  .menu {
-    display: flex;
-    align-items: center;
-  }
-  
-  .menu a {
-    margin-right: 40px;
-    text-decoration: none;
-    color: #333;
-  }
-  
-  /* Search Bar Styles */
-  .search-bar {
-    display: flex;
-    align-items: center;
-    height: 30px;
-    margin-right: 40px;
-  }
-  
-  .search-input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px 0 0 5px;
-    outline: none;
-    height: 100%;
-    box-sizing: border-box;
-  }
-  
-  .search-button {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 0;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    outline: none;
-    height: 100%;
-    width: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-
-  .search-button img {
-    max-width: 100%; /* Adjust the width as needed */
-    max-height: 100%; /* Adjust the height as needed */
-    
-  }
-
-  .search-button:hover {
-    background: #ccc;
-  }
-  
-  .auth-buttons button {
-    margin-left: 10px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
 /* image section */
 
 .container {
@@ -166,6 +83,7 @@ body {
   width: 95%;
   margin: 20px auto;
 }
+
 .carousel-wrapper {
   position: relative;
   display: flex;
@@ -175,11 +93,10 @@ body {
 
 .categories-carousel {
   display: flex;
-  gap: 16px;
+  flex-wrap: nowrap; /* Force one row */
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 8px;
-  scrollbar-width: none; /* Firefox */
+  padding: 10px 0;
 }
 
 .categories-carousel::-webkit-scrollbar {
@@ -187,32 +104,41 @@ body {
 }
 
 .category-card {
-  flex: 0 0 auto;
-  width: 120px;
-  height: 140px;
-  background-color: #ffffff;
+  flex: 0 0 15%; /* Exactly 5 cards per visible row */
+  box-sizing: border-box;
+  aspect-ratio: 1 / 1;
+  background-color: white;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 10px;
+  margin-right: 16px; /* Manual spacing instead of gap */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 12px;
-  cursor: pointer;
-  scroll-snap-align: start;
-  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
 }
 
-.category-card:hover {
-  transform: translateY(-4px);
+.category-card:last-child {
+  margin-right: 0;
 }
 
 .category-card span {
-  font-weight: bold;
-  display: block;
+  font-size: 1rem;
   margin-bottom: 8px;
+  display: block;
 }
 
 .category-card img {
-  width: 40px;
-  height: 40px;
+  width: 60%;
+  height: auto;
+  max-height: 60%;
+  object-fit: contain;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
 }
 
 .scroll-button {
@@ -236,12 +162,10 @@ body {
 
 .scroll-button-left {
   left: 0;
-  right: unset;
 }
 
 .scroll-button-right {
   right: 0;
-  left: unset;
 }
 
 /* Carousel for Top Performers */
@@ -261,29 +185,37 @@ body {
 
 .top-performers-carousel {
   display: flex;
-  gap: 16px;
+  flex-wrap: nowrap;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 8px;
-  scrollbar-width: none; /* Firefox */
+  padding: 10px 0;
+  scrollbar-width: none;
 }
 
 .top-performers-carousel::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
 }
 
 .performer-card {
-  flex: 0 0 auto;
-  width: 120px;
-  height: 140px;
+  flex: 0 0 15%;
+  box-sizing: border-box;
+  aspect-ratio: 1 / 1.1; /* Slightly taller than wide */
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 12px;
+  margin-right: 16px; /* Manual spacing instead of gap */
   cursor: pointer;
-  scroll-snap-align: start;
   transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.performer-card:last-child {
+  margin-right: 0;
 }
 
 .performer-card:hover {
@@ -297,8 +229,9 @@ body {
 }
 
 .performer-card img {
-  width: 40px;
-  height: 40px;
+  width: 50%;
+  height: auto;
+  object-fit: contain;
 }
 
 .scroll-button-left-top {
@@ -340,71 +273,3 @@ body {
   z-index: 10;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
-
-/* Footer Styles */
-
-.footer {
-  background-color: #f8f9fa;
-  padding: 40px 0;
-  text-align: center;
-}
-
-.footer-content {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
-.footer-section {
-  flex: 1;
-  max-width: 300px;
-  padding: 0 20px;
-}
-
-.footer-section h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: black;
-}
-
-.footer-section p {
-  font-size: 0.9rem;
-  color: black;
-}
-
-.footer-section ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.footer-section ul li {
-  margin: 8px 0;
-}
-
-.footer-section ul li a {
-  color: black;
-  text-decoration: none;
-}
-
-.footer-section ul li a:hover {
-  text-decoration: underline;
-}
-
-.social-icons {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.social-icon {
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-}
-
-.social-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-
