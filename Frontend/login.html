@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login & Register</title>
+  <title>Login</title>
   <style>
+    /* Add the same styles here as in your original code */
     body {
       font-family: Arial, sans-serif;
       background: #f2f2f2;
@@ -53,40 +54,17 @@
 </head>
 <body>
 
-<div class="container" id="form-container">
+<div class="container">
   <form id="login-form">
     <h2>Login</h2>
     <input type="text" placeholder="Username" required>
     <input type="password" placeholder="Password" required>
     <button type="submit">Login</button>
     <div class="switch">
-      Don't have an account? <a onclick="showRegister()">Register</a>
-    </div>
-  </form>
-
-  <form id="register-form" style="display: none;">
-    <h2>Register</h2>
-    <input type="text" placeholder="Username" required>
-    <input type="email" placeholder="Email" required>
-    <input type="password" placeholder="Password" required>
-    <button type="submit">Register</button>
-    <div class="switch">
-      Already have an account? <a onclick="showLogin()">Login</a>
+      Don't have an account? <a href="register.html">Register</a>
     </div>
   </form>
 </div>
-
-<script>
-  function showRegister() {
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('register-form').style.display = 'block';
-  }
-
-  function showLogin() {
-    document.getElementById('register-form').style.display = 'none';
-    document.getElementById('login-form').style.display = 'block';
-  }
-</script>
 
 </body>
 </html>

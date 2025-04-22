@@ -70,7 +70,7 @@
     background: #ccc;
   }
   
-  .auth-buttons button {
+  .auth-buttons a {
     margin-left: 10px;
     padding: 8px 16px;
     border: none;
