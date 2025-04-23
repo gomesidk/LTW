@@ -64,15 +64,15 @@
 <body>
 
 <div class="container">
-  <form id="register-form">
+    <form id="login-form" method="post" action="../Actions/Action_Register.php">
     <h2>Register</h2>
     <input type="text" placeholder="Username" required>
-    <input type="email" placeholder="Email" required>
-    <input type="password" placeholder="Password" required>
-    <input type="password" placeholder="Birth Date" required>
-    <input type="password" placeholder="Phone Number" required>
-    <input type="password" placeholder="Bank Account" required>
-    <input type="password" placeholder="Address" required>
+    <input type="text" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="text" placeholder="Birth Date" required>2
+    <input type="text" placeholder="Phone Number" required>
+    <input type="text" placeholder="Bank Account" required>
+    <input type="text" placeholder="Address" required>
     <button type="submit">Register</button>
     <div class="switch">
       Already have an account? <a href="login.php">Login</a>

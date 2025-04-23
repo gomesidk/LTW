@@ -64,10 +64,10 @@
 <body>
 
 <div class="container">
-  <form id="login-form">
+  <form id="login-form" method="post" action="../Actions/Action_Login.php">
     <h2>Login</h2>
-    <input type="text" placeholder="Username" required>
-    <input type="password" placeholder="Password" required>
+    <input type="text" name="email" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
     <button type="submit">Login</button>
     <div class="switch">
       Don't have an account? <a href="register.php">Register</a>
