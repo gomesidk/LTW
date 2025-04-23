@@ -1,6 +1,6 @@
 <?php
   // Include the session and header/footer functions
-  require_once('components.php');
+  require_once('../Templates/common_template.php');
   require_once(__DIR__ . '/../utils/session.php');
   $session = new Session(); // Initialize session
 ?>
@@ -17,19 +17,11 @@ drawHeader($session);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkillFlow</title>
-  <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="navbar.css">
-  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
-  <!-- Navbar Include -->
-  <div id="navbar"></div>
-  <script>
-    fetch('navbar.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('navbar').innerHTML = data);
-  </script>
-
   <div class="container">
     <div class="image-section">
       <img src="../assets/images/team.jpg" alt="Team Image">
@@ -85,15 +77,6 @@ drawHeader($session);
       <button class="scroll-button scroll-button-right-top" onclick="scrollTopPerformers('right')">›</button>
     </div>
   </section>
-
-  <!-- Footer Include -->
-  <div id="footer"></div>
-  <script>
-    fetch('footer.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('footer').innerHTML = data);
-  </script>
-
 </body>
 <script>
   window.onload = function() {

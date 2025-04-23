@@ -1,12 +1,24 @@
+<?php
+  // Include the session and header/footer functions
+  require_once('../Templates/common_template.php');
+  require_once(__DIR__ . '/../utils/session.php');
+  $session = new Session(); // Initialize session
+?>
+
+<?php
+// Render header
+drawHeader($session);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Upwork Profile Mockup</title>
-  <link rel="stylesheet" href="profile.css" />
-  <link rel="stylesheet" href="navbar.css">
-  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="../css/profile.css" />
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
   <!DOCTYPE html>
@@ -77,3 +89,8 @@
 
 </body>
 </html>
+
+<?php
+// Render header
+drawFooter($session);
+?>
