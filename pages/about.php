@@ -21,14 +21,6 @@ drawHeader($session);
   <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
-  <!-- Navbar Include -->
-  <div id="navbar"></div>
-  <script>
-    fetch('navbar.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('navbar').innerHTML = data);
-  </script>
-
   <!-- About Section -->
   <section class="about-section">
     <div class="container">
@@ -79,15 +71,6 @@ drawHeader($session);
       </div>
     </div>
   </section>
-
-  <!-- Footer Include -->
-  <div id="footer"></div>
-  <script>
-    fetch('footer.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('footer').innerHTML = data);
-  </script>
-
 </body>
 </html>
 <?php
