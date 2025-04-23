@@ -7,25 +7,26 @@
     <link rel="stylesheet" href="navbar.css">
 </head>
 <body>
-
     <header class="navbar">
         <a href="index.html" class="logo">SkillFlow</a>
         <div class="bar">
             <nav class="menu">
+                <a href="index.html">Home</a>
                 <a href="jobs.html">Jobs</a>
-                <a href="pricing.html">Pricing</a>
-                <a href="freelancers.html">Freelancers</a>
+                <a href="newjobs.html">New</a>
                 <a href="about.html">About</a>
                 <div class="search-bar">
                     <input type="text" placeholder="Search..." class="search-input">
                     <button type="submit" class="search-button">
-                        <img src="assets/icons/search.png" alt="Search">
+                        <img src="../assets/icons/search.png" alt="Search">
                     </button>
                 </div>
             </nav>
             <div class="auth-buttons" id="authButtons">
-                <div id="profileCircle" class="profile-circle" style="display:block;">
-                    <img src="assets/icons/user.png" alt="Profile">
+                <button class="login" id="loginButton" onclick="window.location.href='login.html'">Log in</button>
+                <button class="signup" id="signupButton" onclick="window.location.href='register.html'">Sign up</button>
+                <div id="profileCircle" class="profile-circle" style="display:block;" onclick="window.location.href='profile.html'" style="cursor:pointer;">
+                    <img src="../assets/icons/user.png" alt="Profile">
                 </div>
             </div>
         </div>
