@@ -16,10 +16,10 @@ function drawHeader(Session $session) {
             <a href="index.html" class="logo">SkillFlow</a>
             <div class="bar">
                 <nav class="menu">
-                    <a href="index.html">Home</a>
-                    <a href="jobs.html">Jobs</a>
-                    <a href="newjobs.html">New</a>
-                    <a href="about.html">About</a>
+                    <a href="index.php">Home</a>
+                    <a href="jobs.php">Jobs</a>
+                    <a href="newjobs.php">New</a>
+                    <a href="about.php">About</a>
                     <div class="search-bar">
                         <input type="text" placeholder="Search..." class="search-input">
                         <button type="submit" class="search-button">
