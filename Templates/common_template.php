@@ -33,7 +33,7 @@ function drawHeader(Session $session) {
                             <img src="../assets/icons/user.png" alt="Profile">
                         </div>
                     <?php else: ?>
-                        <button class="login" id="loginButton" onclick="window.location.href='login.html'">Log in</button>
+                        <button class="login" id="loginButton" onclick="window.location.href='login.php'">Log in</button>
                         <button class="signup" id="signupButton" onclick="window.location.href='register.html'">Sign up</button>
                     <?php endif; ?>
                 </div>

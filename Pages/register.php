@@ -11,7 +11,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>Register</title>
   <style>
     /* Add the same styles here as in your original code */
     body {
@@ -64,20 +64,24 @@
 <body>
 
 <div class="container">
-  <form id="login-form">
-    <h2>Login</h2>
+  <form id="register-form">
+    <h2>Register</h2>
     <input type="text" placeholder="Username" required>
+    <input type="email" placeholder="Email" required>
     <input type="password" placeholder="Password" required>
-    <button type="submit">Login</button>
+    <input type="password" placeholder="Birth Date" required>
+    <input type="password" placeholder="Phone Number" required>
+    <input type="password" placeholder="Bank Account" required>
+    <input type="password" placeholder="Address" required>
+    <button type="submit">Register</button>
     <div class="switch">
-      Don't have an account? <a href="register.php">Register</a>
+      Already have an account? <a href="login.php">Login</a>
     </div>
   </form>
 </div>
 
 </body>
 </html>
-
 
 <section id="messages">
   <?php foreach ($session->getMessages() as $message) { ?>
@@ -86,4 +90,3 @@
     </article>
   <?php } ?>
 </section>
-
