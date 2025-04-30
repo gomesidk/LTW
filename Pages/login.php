@@ -2,7 +2,7 @@
   declare(strict_types = 1);
 
   // Include necessary files for session and header/footer functions
-  require_once(__DIR__ . '/../utils/session.php');
+  require_once(__DIR__ . '/../Utils/Session.php');
   require_once('../Templates/common_template.php');
   $session = new Session(); // Initialize session
 ?>

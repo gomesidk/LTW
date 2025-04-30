@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-require_once(__DIR__ . '/../utils/session.php');
+require_once(__DIR__ . '/../Utils/Session.php');
 $session = new Session(); // Initialize the session
 
 require_once(__DIR__ . '/../database/connection.php');
