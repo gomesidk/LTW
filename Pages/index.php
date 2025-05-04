@@ -29,7 +29,9 @@ drawHeader($session);
     <div class="text-section">
       <h1>We connect people to bring projects to life </h1>
       <p>Find high-quality talent or open jobs with the help of AI tools that keep you in control.</p> <br><br>
-      <button>Find Talent Now</button>
+      <a href="jobs.php">
+        <button>Find Work Now</button>
+      </a>
     </div>
   </div>
 
@@ -71,7 +73,6 @@ drawHeader($session);
         <div class="performer-card">Performer 8</div>
         <div class="performer-card">Performer 9</div>
         <div class="performer-card">Performer 10</div>
-        <div class="performer-card">Performer 11</div>
       </div>
       <button class="scroll-button scroll-button-left-top" onclick="scrollTopPerformers('left')">‹</button>
       <button class="scroll-button scroll-button-right-top" onclick="scrollTopPerformers('right')">›</button>

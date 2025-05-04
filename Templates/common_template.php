@@ -34,7 +34,7 @@ function drawHeader(Session $session) {
                         </div>
                     <?php else: ?>
                         <button class="login" id="loginButton" onclick="window.location.href='login.php'">Log in</button>
-                        <button class="signup" id="signupButton" onclick="window.location.href='register.html'">Sign up</button>
+                        <button class="signup" id="signupButton" onclick="window.location.href='register.php'">Sign up</button>
                     <?php endif; ?>
                 </div>
             </div>
@@ -53,8 +53,8 @@ function drawFooter() {
             <div class="footer-section">
                 <h3>Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="about.php">About</a></li>
                     <li><a href="#">Contact</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                 </ul>
