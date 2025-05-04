@@ -62,9 +62,15 @@ function drawFooter() {
             <div class="footer-section">
                 <h3>Follow Us</h3>
                 <div class="social-icons">
-                    <a href="#" class="social-icon"><img src="facebook-icon.png" alt="Facebook"></a>
-                    <a href="#" class="social-icon"><img src="twitter-icon.png" alt="Twitter"></a>
-                    <a href="#" class="social-icon"><img src="instagram-icon.png" alt="Instagram"></a>
+                    <a href="https://www.facebook.com/seu-usuario" class="social-icon" target="_blank">
+                        <img src="../assets/icons/facebook-icon.png" alt="Facebook">
+                    </a>
+                    <a href="https://twitter.com/seu-usuario" class="social-icon" target="_blank">
+                        <img src="../assets/icons/twitter-logo.png" alt="Twitter">
+                    </a>
+                    <a href="https://www.instagram.com/seu-usuario" class="social-icon" target="_blank">
+                        <img src="../assets/icons/instagram-logo.png" alt="Instagram">
+                    </a>
                 </div>
             </div>
         </div>

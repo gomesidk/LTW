@@ -69,7 +69,7 @@
     <input type="text" placeholder="Username" required>
     <input type="text" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
-    <input type="text" placeholder="Birth Date" required>2
+    <input type="text" placeholder="Birth Date" required>
     <input type="text" placeholder="Phone Number" required>
     <input type="text" placeholder="Bank Account" required>
     <input type="text" placeholder="Address" required>

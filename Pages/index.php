@@ -40,19 +40,10 @@ drawHeader($session);
     <div class="carousel-wrapper">
       <div class="categories-carousel" id="carousel">
         <div class="category-card"><span>AI</span><img src="../assets/icons/ai.png" alt="AI Icon"></div>
-        <div class="category-card"><span>Data</span><img src="../assets/icons/data.png" alt="Data Icon"></div>
-        <div class="category-card"><span>Mobile</span><img src="../assets/icons/mobile.png" alt="Mobile Icon"></div>
-        <div class="category-card"><span>Firmware</span><img src="../assets/icons/firmware.png" alt="Firmware Icon"></div>
-        <div class="category-card"><span>Web</span><img src="../assets/icons/web.png" alt="Web Icon"></div>
-        <div class="category-card"><span>Cloud</span><img src="../assets/icons/cloud.png" alt="Cloud Icon"></div>
+        <div class="category-card"><span>Data Science</span><img src="../assets/icons/data.png" alt="Data Icon"></div>
+        <div class="category-card"><span>Software Engineering</span><img src="../assets/icons/mobile.png" alt="Mobile Icon"></div>
+        <div class="category-card"><span>Hardware Engineering</span><img src="../assets/icons/firmware.png" alt="Firmware Icon"></div>
         <div class="category-card"><span>Cybersecurity</span><img src="../assets/icons/cybersecurity.png" alt="Cybersecurity Icon"></div>
-        <div class="category-card"><span>IoT</span><img src="../assets/icons/iot.png" alt="IoT Icon"></div>
-        <div class="category-card"><span>DevOps</span><img src="../assets/icons/devops.png" alt="DevOps Icon"></div>
-        <div class="category-card"><span>Robotics</span><img src="../assets/icons/robotics.png" alt="Robotics Icon"></div>
-        <div class="category-card"><span>Game Dev</span><img src="../assets/icons/game.png" alt="Game Development Icon"></div>
-        <div class="category-card"><span>ML</span><img src="../assets/icons/ml.png" alt="Machine Learning Icon"></div>
-        <div class="category-card"><span>Blockchain</span><img src="../assets/icons/blockchain.png" alt="Blockchain Icon"></div>
-        <div class="category-card"><span>AR/VR</span><img src="../assets/icons/vr.png" alt="AR/VR Icon"></div>
       </div>
       <button class="scroll-button scroll-button-left" onclick="scrollCarousel('left')">‹</button>
       <button class="scroll-button scroll-button-right" onclick="scrollCarousel('right')">›</button>
