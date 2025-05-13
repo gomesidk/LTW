@@ -75,7 +75,7 @@ function drawFooter() {
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Your Company. All rights reserved.</p>
+            <p>&copy; 2025 SkillFlow. All rights reserved.</p>
         </div>
     </footer>
     </body>

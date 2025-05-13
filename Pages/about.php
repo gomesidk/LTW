@@ -26,7 +26,7 @@ drawHeader($session);
     <div class="container">
       <h2>About Us</h2>
       <p class="about-intro">
-        At <strong>YourSite</strong>, we're passionate about empowering tech enthusiasts, developers, and innovators. 
+        At <strong>SkillFlow</strong>, we're passionate about empowering tech enthusiasts, developers, and innovators. 
         Our platform is dedicated to showcasing top performers, emerging trends, and the most exciting domains in technology.
       </p>
       <div class="about-columns">
@@ -64,8 +64,13 @@ drawHeader($session);
         </div>
         <div class="team-card">
           <img src="assets/team/avatar2.png" alt="Team Member 2">
-          <h4>Ana Costa</h4>
-          <p>Design & UX</p>
+          <h4>Tomás Freire</h4>
+          <p>Founder & Developer</p>
+        </div>
+        <div class="team-card">
+          <img src="assets/team/avatar2.png" alt="Team Member 2">
+          <h4>João Gomes</h4>
+          <p>Founder & Developer</p>
         </div>
         <!-- Add more team members as needed -->
       </div>
