@@ -10,14 +10,14 @@ require_once(__DIR__ . '/../database/userClass.php');
 $db = getDatabaseConnection(); // Get the database connection
 
 // Check if the necessary form data is provided via POST
-if (isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['birth_date'], $_POST['profile_picture'], $_POST['phone'], $_POST['nr_bank_account'], $_POST['address'])) {
+if (isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['birth_date'], $_POST['phone'], $_POST['nr_bank_account'], $_POST['address'])) {
     
     // Sanitize input (basic example, more sanitization may be required)
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $birth_date = trim($_POST['birth_date']);
-    $profile_picture = trim($_POST['profile_picture']);  // In a real app, you may want to handle file uploads
+    // $profile_picture = trim($_POST['profile_picture']);  // In a real app, you may want to handle file uploads
     $phone = trim($_POST['phone']);
     $nr_bank_account = trim($_POST['nr_bank_account']);
     $address = trim($_POST['address']);
@@ -32,7 +32,7 @@ if (isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['birth_dat
     }
 
     // Use the User class to register the new user
-    $isRegistered = User::register($db, $name, $email, $password, $birth_date, $profile_picture, $phone, $nr_bank_account, $address);
+    $isRegistered = User::register($db, $name, $email, $password, $birth_date, $phone, $nr_bank_account, $address);
 
     if ($isRegistered) {
         // User successfully registered
@@ -41,6 +41,7 @@ if (isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['birth_dat
         $user = User::getUserWithPassword($db, $email, $password);  // Log the user in
         $session->setId($user->id);
         $session->setName($user->name());
+        header('Location: ../Pages/index.php');
     } else {
         // If registration fails
         $session->addMessage('error', 'There was an error during registration.');
@@ -50,5 +51,5 @@ if (isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['birth_dat
     $session->addMessage('error', 'Please fill all required fields!');
 }
 
-header('Location: ' . $_SERVER['HTTP_REFERER']);  // Redirect back to the registration form
+// header('Location: ' . $_SERVER['HTTP_REFERER']);  // Redirect back to the registration form
 ?>
