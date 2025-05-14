@@ -9,12 +9,11 @@ class User {
     public string $created_at;
     public int $level;
     public string $birth_date;
-    public string $profile_picture;
     public string $phone;
     public string $nr_bank_account;
     public string $address;
 
-    public function __construct(int $id, string $name, string $email, string $password, string $created_at, int $level, string $birth_date, string $profile_picture, string $phone, string $nr_bank_account, string $address)
+    public function __construct(int $id, string $name, string $email, string $password, string $created_at, int $level, string $birth_date, string $phone, string $nr_bank_account, string $address)
     {
         $this->id = $id;
         $this->name = $name;
@@ -23,7 +22,6 @@ class User {
         $this->created_at = $created_at;
         $this->level = $level;
         $this->birth_date = $birth_date;
-        $this->profile_picture = $profile_picture;
         $this->phone = $phone;
         $this->nr_bank_account = $nr_bank_account;
         $this->address = $address;
@@ -36,7 +34,7 @@ class User {
     function save(PDO $db) {
         $stmt = $db->prepare('
             UPDATE User 
-            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, profile_picture = ?, phone = ?, nr_bank_account = ?, address = ?
+            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, phone = ?, nr_bank_account = ?, address = ?
             WHERE id = ?
         ');
         $stmt->execute(array(
@@ -46,7 +44,6 @@ class User {
             $this->created_at,
             $this->level,
             $this->birth_date,
-            $this->profile_picture,
             $this->phone,
             $this->nr_bank_account,
             $this->address,
@@ -56,7 +53,7 @@ class User {
 
     static function getUserWithPassword(PDO $db, string $email, string $password) : ?User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date, profile_picture, phone, nr_bank_account, address
+            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address
             FROM User 
             WHERE lower(email) = ? AND password = ?
         ');
@@ -71,7 +68,6 @@ class User {
                 $user['created_at'],
                 $user['level'],
                 $user['birth_date'],
-                $user['profile_picture'],
                 $user['phone'],
                 $user['nr_bank_account'],
                 $user['address']
@@ -83,7 +79,7 @@ class User {
 
     static function getUser(PDO $db, int $id) : User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date, profile_picture, phone, nr_bank_account, address
+            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address
             FROM User 
             WHERE id = ?
         ');
@@ -98,7 +94,6 @@ class User {
             $user['created_at'],
             $user['level'],
             $user['birth_date'],
-            $user['profile_picture'],
             $user['phone'],
             $user['nr_bank_account'],
             $user['address']
@@ -106,15 +101,15 @@ class User {
     }
 
     // Static method to register a new user
-    static function register(PDO $db, string $name, string $email, string $password, string $birth_date, string $profile_picture, string $phone, string $nr_bank_account, string $address): bool {
+    static function register(PDO $db, string $name, string $email, string $password, string $birth_date, string $phone, string $nr_bank_account, string $address): bool {
         $created_at = date('Y-m-d H:i:s');
         $stmt = $db->prepare('
-            INSERT INTO User (name, email, password, created_at, level, birth_date, profile_picture, phone, nr_bank_account, address)
-            VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, ?)
+            INSERT INTO User (name, email, password, created_at, level, birth_date, phone, nr_bank_account, address)
+            VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?)
         ');
 
         $hashedPassword = sha1($password); // Using sha1 for simplicity, but consider using password_hash() for security
-        return $stmt->execute(array($name, $email, $hashedPassword, $created_at, $birth_date, $profile_picture, $phone, $nr_bank_account, $address));
+        return $stmt->execute(array($name, $email, $hashedPassword, $created_at, $birth_date, $phone, $nr_bank_account, $address));
     }
 }
 ?>

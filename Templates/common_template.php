@@ -29,7 +29,7 @@ function drawHeader(Session $session) {
                 </nav>
                 <div class="auth-buttons" id="authButtons">
                     <?php if ($session->isLoggedIn()): ?>
-                        <div id="profileCircle" class="profile-circle" style="display:block;" onclick="window.location.href='profile.html'">
+                        <div id="profileCircle" class="profile-circle" style="display:block;" onclick="window.location.href='profile.php'">
                             <img src="../assets/icons/user.png" alt="Profile">
                         </div>
                     <?php else: ?>
