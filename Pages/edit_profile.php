@@ -46,13 +46,13 @@ $user = User::getUser($db, (int)$session->getId());
             <input type="text" id="name" name="name" required value="<?= htmlspecialchars($user->name) ?>" />
 
             <label for="email">Email *</label>
-            <input type="text" id="email" name="email" required value="<?= htmlspecialchars($user->email) ?>" />
+            <input type="email" id="email" name="email" required value="<?= htmlspecialchars($user->email) ?>" />
 
             <label for="birth_date">Birth Date *</label>
-            <input type="text" id="birth_date" name="birth_date" required value="<?= htmlspecialchars($user->birth_date) ?>" />
+            <input type="date" id="birth_date" name="birth_date" required value="<?= htmlspecialchars($user->birth_date) ?>" />
 
             <label for="phone">Phone *</label>
-            <input type="text" id="phone" name="phone" required value="<?= htmlspecialchars($user->phone) ?>" />
+            <input type="tel" id="phone" name="phone" required value="<?= htmlspecialchars($user->phone) ?>" />
 
             <label for="nr_bank_account">Bank Account Number *</label>
             <input type="text" id="nr_bank_account" name="nr_bank_account" required value="<?= htmlspecialchars($user->nr_bank_account) ?>" />

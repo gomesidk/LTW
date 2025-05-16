@@ -69,10 +69,10 @@
     <form id="login-form" method="post" action="../Actions/Action_Register.php">
     <h2>Register</h2>
     <input type="text" name="name" placeholder="Username" required>
-    <input type="text" name="email" placeholder="Email" required>
+    <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
-    <input type="text" name="birth_date" placeholder="Birth Date" required>
-    <input type="text" name="phone" placeholder="Phone Number" required>
+    <input type="date" name="birth_date" placeholder="Birth Date" required>
+    <input type="tel" name="phone" placeholder="Phone Number" required>
     <input type="text" name="nr_bank_account" placeholder="Bank Account" required>
     <input type="text" name="address" placeholder="Address" required>
 
