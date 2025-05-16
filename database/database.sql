@@ -22,6 +22,8 @@ CREATE TABLE User (
     phone TEXT NOT NULL,
     nr_bank_account TEXT NOT NULL,
     address TEXT NOT NULL
+    description TEXT,
+    
 );
 
 CREATE TABLE Message (
