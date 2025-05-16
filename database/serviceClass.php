@@ -143,5 +143,32 @@ class Service {
 
         return $serviceObjects;
     }
+
+    // Static method to retrieve all services in a specific category
+    static function getServices(PDO $db) : array {
+        $stmt = $db->prepare('
+            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id
+            FROM Service
+        ');
+        $stmt->execute(array($category));
+        $services = $stmt->fetchAll();
+
+        $serviceObjects = [];
+        foreach ($services as $service) {
+            $serviceObjects[] = new Service(
+                $service['id'],
+                $service['name'],
+                $service['description'],
+                $service['price'],
+                $service['created_at'],
+                $service['number_applications'],
+                $service['category'],
+                $service['buyer_id'],
+                $service['worker_id']
+            );
+        }
+
+        return $serviceObjects;
+    }
 }
 ?>

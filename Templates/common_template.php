@@ -9,7 +9,9 @@ function drawHeader(Session $session) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SkillFlow</title>
-        <link rel="stylesheet" href="navbar.css">
+        <link rel="stylesheet" href="../css/navbar.css">
+        <link rel="stylesheet" href="../css/jobs.css">
+        <link rel="stylesheet" href="../css/footer.css">
     </head>
     <body>
         <header class="navbar">
@@ -82,4 +84,27 @@ function drawFooter() {
     </html>
     <?php
 }
+
+
+
+function draw_service(Service $service) {
+    ?>
+    <div style="
+        border: 1px solid #ccc; 
+        padding: 15px; 
+        margin: 10px 0; 
+        border-radius: 8px; 
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+        max-width: 600px;
+    ">
+        <h2 style="margin: 0 0 10px 0;"><?= htmlspecialchars($service->name) ?></h2>
+        <p style="margin: 0 0 8px 0;"><?= nl2br(htmlspecialchars($service->description)) ?></p>
+        <p><strong>Category:</strong> <?= htmlspecialchars($service->category) ?></p>
+        <p><strong>Price:</strong> $<?= number_format($service->price, 2) ?></p>
+        <p><strong>Applications:</strong> <?= $service->number_applications ?></p>
+        <p><small>Posted on: <?= htmlspecialchars($service->created_at) ?></small></p>
+    </div>
+    <?php
+}
+
 ?>

@@ -24,7 +24,7 @@ drawHeader($session);
     <main class="new-job-container">
         <div class="form-container">
             <h1>Create a New Job</h1>
-            <form action="#" method="POST" class="job-form">
+            <form action="../Actions/Action_Create_Job.php" method="POST" class="job-form">
                 <label for="jobTitle">Job Title</label>
                 <input type="text" id="jobTitle" name="jobTitle" placeholder="Enter job title" required>
 
