@@ -1,3 +1,15 @@
+<?php
+  // Include the session and header/footer functions
+  require_once('../Templates/common_template.php');
+  require_once(__DIR__ . '/../Utils/Session.php');
+  $session = new Session(); // Initialize session
+?>
+
+<?php
+// Render header
+drawHeader($session);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,13 +21,6 @@
   <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
-    <!-- Navbar Include -->
-    <div id="navbar"></div>
-    <script>
-            fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('navbar').innerHTML = data);
-    </script>
     <main class="new-job-container">
         <div class="form-container">
             <h1>Create a New Job</h1>
@@ -44,12 +49,7 @@
             </form>
         </div>
     </main>
-
-
-    <!-- Footer Include -->
-    <div id="footer"></div>
-    <script>
-        fetch('footer.html')
-        .then(response => response.text())
-        .then(data => document.getElementById('footer').innerHTML = data);
-    </script>
+<?php
+// Render header
+drawFooter($session);
+?>

@@ -1,3 +1,12 @@
+<?php
+  declare(strict_types = 1);
+
+  // Include necessary files for session and header/footer functions
+  require_once(__DIR__ . '/../Utils/Session.php');
+  require_once('../Templates/common_template.php');
+  $session = new Session(); // Initialize session
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,16 +64,26 @@
 <body>
 
 <div class="container">
-  <form id="login-form">
+  <form id="login-form" method="post" action="../Actions/Action_Login.php">
     <h2>Login</h2>
-    <input type="text" placeholder="Username" required>
-    <input type="password" placeholder="Password" required>
+    <input type="text" name="email" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
     <button type="submit">Login</button>
     <div class="switch">
-      Don't have an account? <a href="register.html">Register</a>
+      Don't have an account? <a href="register.php">Register</a>
     </div>
   </form>
 </div>
 
 </body>
 </html>
+
+
+<section id="messages">
+  <?php foreach ($session->getMessages() as $message) { ?>
+    <article class="<?=$message['type']?>">
+      <?=$message['text']?>
+    </article>
+  <?php } ?>
+</section>
+

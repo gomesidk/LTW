@@ -1,3 +1,12 @@
+<?php
+  declare(strict_types = 1);
+
+  // Include necessary files for session and header/footer functions
+  require_once(__DIR__ . '/../Utils/Session.php');
+  require_once('../Templates/common_template.php');
+  $session = new Session(); // Initialize session
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,21 +64,29 @@
 <body>
 
 <div class="container">
-  <form id="register-form">
+    <form id="login-form" method="post" action="../Actions/Action_Register.php">
     <h2>Register</h2>
-    <input type="text" placeholder="Username" required>
-    <input type="email" placeholder="Email" required>
-    <input type="password" placeholder="Password" required>
-    <input type="password" placeholder="Birth Date" required>
-    <input type="password" placeholder="Phone Number" required>
-    <input type="password" placeholder="Bank Account" required>
-    <input type="password" placeholder="Address" required>
+    <input type="text" name="name" placeholder="Username" required>
+    <input type="text" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="text" name="birth_date" placeholder="Birth Date" required>
+    <input type="text" name="phone" placeholder="Phone Number" required>
+    <input type="text" name="nr_bank_account" placeholder="Bank Account" required>
+    <input type="text" name="address" placeholder="Address" required>
     <button type="submit">Register</button>
     <div class="switch">
-      Already have an account? <a href="login.html">Login</a>
+      Already have an account? <a href="login.php">Login</a>
     </div>
   </form>
 </div>
 
 </body>
 </html>
+
+<section id="messages">
+  <?php foreach ($session->getMessages() as $message) { ?>
+    <article class="<?=$message['type']?>">
+      <?=$message['text']?>
+    </article>
+  <?php } ?>
+</section>

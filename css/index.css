@@ -61,8 +61,7 @@ body {
 }
 
 .text-section button {
-  padding: 10px 20px;
-  height: 10%;
+  padding: 10px 20px; /* Keep padding to control button size */
   background-color: #11a800;
   color: white;
   border: none;
@@ -70,6 +69,7 @@ body {
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
+  display: inline-block; /* Ensure button respects the content size */
 }
 
 .text-section button:hover {

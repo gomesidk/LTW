@@ -1,3 +1,16 @@
+<?php
+  // Include the session and header/footer functions
+  require_once('../Templates/common_template.php');
+  require_once(__DIR__ . '/../Utils/Session.php');
+  $session = new Session(); // Initialize session
+?>
+
+<?php
+// Render header
+drawHeader($session);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +22,6 @@
   <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
-  <!-- Navbar Include -->
-  <div id="navbar"></div>
-  <script>
-    fetch('navbar.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('navbar').innerHTML = data);
-  </script>
-
   <div class="container">
     <div class="image-section">
       <img src="../assets/images/team.jpg" alt="Team Image">
@@ -24,7 +29,9 @@
     <div class="text-section">
       <h1>We connect people to bring projects to life </h1>
       <p>Find high-quality talent or open jobs with the help of AI tools that keep you in control.</p> <br><br>
-      <button>Find Talent Now</button>
+      <a href="jobs.php">
+        <button>Find Work Now</button>
+      </a>
     </div>
   </div>
 
@@ -33,19 +40,10 @@
     <div class="carousel-wrapper">
       <div class="categories-carousel" id="carousel">
         <div class="category-card"><span>AI</span><img src="../assets/icons/ai.png" alt="AI Icon"></div>
-        <div class="category-card"><span>Data</span><img src="../assets/icons/data.png" alt="Data Icon"></div>
-        <div class="category-card"><span>Mobile</span><img src="../assets/icons/mobile.png" alt="Mobile Icon"></div>
-        <div class="category-card"><span>Firmware</span><img src="../assets/icons/firmware.png" alt="Firmware Icon"></div>
-        <div class="category-card"><span>Web</span><img src="../assets/icons/web.png" alt="Web Icon"></div>
-        <div class="category-card"><span>Cloud</span><img src="../assets/icons/cloud.png" alt="Cloud Icon"></div>
+        <div class="category-card"><span>Data Science</span><img src="../assets/icons/data.png" alt="Data Icon"></div>
+        <div class="category-card"><span>Software Engineering</span><img src="../assets/icons/mobile.png" alt="Mobile Icon"></div>
+        <div class="category-card"><span>Hardware Engineering</span><img src="../assets/icons/firmware.png" alt="Firmware Icon"></div>
         <div class="category-card"><span>Cybersecurity</span><img src="../assets/icons/cybersecurity.png" alt="Cybersecurity Icon"></div>
-        <div class="category-card"><span>IoT</span><img src="../assets/icons/iot.png" alt="IoT Icon"></div>
-        <div class="category-card"><span>DevOps</span><img src="../assets/icons/devops.png" alt="DevOps Icon"></div>
-        <div class="category-card"><span>Robotics</span><img src="../assets/icons/robotics.png" alt="Robotics Icon"></div>
-        <div class="category-card"><span>Game Dev</span><img src="../assets/icons/game.png" alt="Game Development Icon"></div>
-        <div class="category-card"><span>ML</span><img src="../assets/icons/ml.png" alt="Machine Learning Icon"></div>
-        <div class="category-card"><span>Blockchain</span><img src="../assets/icons/blockchain.png" alt="Blockchain Icon"></div>
-        <div class="category-card"><span>AR/VR</span><img src="../assets/icons/vr.png" alt="AR/VR Icon"></div>
       </div>
       <button class="scroll-button scroll-button-left" onclick="scrollCarousel('left')">‹</button>
       <button class="scroll-button scroll-button-right" onclick="scrollCarousel('right')">›</button>
@@ -66,21 +64,11 @@
         <div class="performer-card">Performer 8</div>
         <div class="performer-card">Performer 9</div>
         <div class="performer-card">Performer 10</div>
-        <div class="performer-card">Performer 11</div>
       </div>
       <button class="scroll-button scroll-button-left-top" onclick="scrollTopPerformers('left')">‹</button>
       <button class="scroll-button scroll-button-right-top" onclick="scrollTopPerformers('right')">›</button>
     </div>
   </section>
-
-  <!-- Footer Include -->
-  <div id="footer"></div>
-  <script>
-    fetch('footer.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('footer').innerHTML = data);
-  </script>
-
 </body>
 <script>
   window.onload = function() {
@@ -168,3 +156,8 @@
   };
 </script>
 </html>
+
+<?php
+// Render header
+drawFooter($session);
+?>

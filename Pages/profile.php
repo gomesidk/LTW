@@ -1,3 +1,15 @@
+<?php
+  // Include the session and header/footer functions
+  require_once('../Templates/common_template.php');
+  require_once(__DIR__ . '/../utils/session.php');
+  $session = new Session(); // Initialize session
+?>
+
+<?php
+// Render header
+drawHeader($session);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,3 +89,8 @@
 
 </body>
 </html>
+
+<?php
+// Render header
+drawFooter($session);
+?>
