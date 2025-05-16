@@ -41,6 +41,7 @@ if (isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['birth_dat
         $user = User::getUserWithPassword($db, $email, $password);  // Log the user in
         $session->setId($user->id);
         $session->setName($user->name());
+        
         header('Location: ../Pages/index.php');
     } else {
         // If registration fails

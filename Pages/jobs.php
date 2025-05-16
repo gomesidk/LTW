@@ -3,7 +3,7 @@
   require_once('../Templates/common_template.php');
   require_once(__DIR__ . '/../Utils/Session.php');
   $session = new Session(); // Initialize session
-?>
+?> 
 
 <?php
 // Render header

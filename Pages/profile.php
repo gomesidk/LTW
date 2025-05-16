@@ -1,8 +1,9 @@
 <?php
-  // Include the session and header/footer functions
-  require_once('../Templates/common_template.php');
-  require_once(__DIR__ . '/../utils/session.php');
-  $session = new Session(); // Initialize session
+declare(strict_types=1);
+
+// This file handles session and retrieves $user from the database
+require_once('../Templates/common_template.php');
+require_once(__DIR__ . '/../actions/Action_Retrieve_Profile.php');
 ?>
 
 <?php
@@ -30,19 +31,11 @@ drawHeader($session);
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-      <!-- Navbar Include -->
-      <div id="navbar"></div>
-      <script>
-        fetch('navbar.html')
-          .then(response => response.text())
-          .then(data => document.getElementById('navbar').innerHTML = data);
-      </script>
-
     <section class="profile">
       <div class="profile-header">
         <img src="https://via.placeholder.com/80" class="avatar" alt="Profile picture" />
         <div class="profile-info">
-          <h1>Joao G.</h1>
+          <h1><?= htmlspecialchars($user->name) ?></h1>
           <p>Matosinhos, Portugal – 10:15 am local time</p>
         </div>
         <button class="public-view">See public view</button>
@@ -78,14 +71,6 @@ drawHeader($session);
       </div>
     </section>
   </div>
-
-    <!-- Footer Include -->
-    <div id="footer"></div>
-    <script>
-        fetch('footer.html')
-        .then(response => response.text())
-        .then(data => document.getElementById('footer').innerHTML = data);
-    </script>
 
 </body>
 </html>

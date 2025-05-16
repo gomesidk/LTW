@@ -12,7 +12,7 @@ body {
   button {
     cursor: pointer;
   }
-
+ 
 /* image section */
 
 .container {
@@ -93,6 +93,7 @@ body {
 
 .categories-carousel {
   display: flex;
+  justify-content: space-around;
   flex-wrap: nowrap; /* Force one row */
   overflow-x: auto;
   scroll-behavior: smooth;
@@ -180,6 +181,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
