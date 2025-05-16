@@ -59,6 +59,8 @@
       color: #007BFF;
       text-decoration: none;
     }
+
+
   </style>
 </head>
 <body>
@@ -73,6 +75,7 @@
     <input type="text" name="phone" placeholder="Phone Number" required>
     <input type="text" name="nr_bank_account" placeholder="Bank Account" required>
     <input type="text" name="address" placeholder="Address" required>
+
     <button type="submit">Register</button>
     <div class="switch">
       Already have an account? <a href="login.php">Login</a>

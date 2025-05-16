@@ -21,9 +21,10 @@ CREATE TABLE User (
     profile_picture TEXT,
     phone TEXT NOT NULL,
     nr_bank_account TEXT NOT NULL,
-    address TEXT NOT NULL
-    description TEXT,
-    
+    address TEXT NOT NULL,
+    type_of_service TEXT,
+    rate REAL, 
+    description TEXT
 );
 
 CREATE TABLE Message (

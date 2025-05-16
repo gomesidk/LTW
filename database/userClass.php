@@ -13,8 +13,11 @@ class User {
     public string $phone;
     public string $nr_bank_account;
     public string $address;
+    public ?string $type_of_service;
+    public ?float $rate;
+    public ?string $description;
 
-    public function __construct(int $id, string $name, string $email, string $password, string $created_at, int $level, string $birth_date, string $phone, string $nr_bank_account, string $address)
+    public function __construct(int $id, string $name, string $email, string $password, string $created_at, int $level, string $birth_date, string $phone, string $nr_bank_account, string $address, ?string $type_of_service, ?float $rate, ?string $description)
     {
         $this->id = $id;
         $this->name = $name;
@@ -27,6 +30,9 @@ class User {
         $this->phone = $phone;
         $this->nr_bank_account = $nr_bank_account;
         $this->address = $address;
+        $this->type_of_service = $type_of_service;
+        $this->rate = $rate;
+        $this->description = $description;
     }
 
     function name() {
@@ -36,7 +42,7 @@ class User {
     function save(PDO $db) {
         $stmt = $db->prepare('
             UPDATE User 
-            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, phone = ?, nr_bank_account = ?, address = ?
+            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, phone = ?, nr_bank_account = ?, address = ?, type_of_service = ?, rate = ?, description = ?
             WHERE id = ?
         ');
         $stmt->execute(array(
@@ -50,18 +56,25 @@ class User {
             $this->phone,
             $this->nr_bank_account,
             $this->address,
+            $this->type_of_service,
+            $this->rate,
+            $this->description,
             $this->id
         ));
     }
 
-    static function getUserWithPassword(PDO $db, string $email, string $password) : ?User {
+    static function getUserWithPassword(PDO $db, string $identifier, string $password) : ?User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address
-            FROM User 
-            WHERE lower(email) = ? AND password = ?
+            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, type_of_service, rate, description
+            FROM User
+            WHERE (email = ? OR name = ? OR phone = ?)
+              AND password = ?
         ');
-        $stmt->execute(array(strtolower($email), sha1($password)));
-
+    
+        $hashedPassword = sha1($password);
+    
+        $stmt->execute([$identifier, $identifier, $identifier, $hashedPassword]);
+    
         if ($user = $stmt->fetch()) {
             return new User(
                 $user['id'],
@@ -71,19 +84,21 @@ class User {
                 $user['created_at'],
                 $user['level'],
                 $user['birth_date'],
-                
                 $user['phone'],
                 $user['nr_bank_account'],
-                $user['address']
+                $user['address'],
+                $user['type_of_service'],
+                $user['rate'],
+                $user['description']
             );
         } else {
             return null;
         }
     }
-
+    
     static function getUser(PDO $db, int $id) : User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date,phone, nr_bank_account, address
+            SELECT id, name, email, password, created_at, level, birth_date,phone, nr_bank_account, address, type_of_service, rate, description
             FROM User 
             WHERE id = ?
         ');
@@ -101,20 +116,29 @@ class User {
 
             $user['phone'],
             $user['nr_bank_account'],
-            $user['address']
+            $user['address'],
+            $user['type_of_service'],
+            $user['rate'],
+            $user['description']
         );
     }
 
     // Static method to register a new user
     static function register(PDO $db, string $name, string $email, string $password, string $birth_date, string $phone, string $nr_bank_account, string $address): bool {
-        $created_at = date('Y-m-d H:i:s');
+        $created_at = date('d-m-Y');
         $stmt = $db->prepare('
-            INSERT INTO User (name, email, password, created_at, level, birth_date, phone, nr_bank_account, address)
-            VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?)
+            INSERT INTO User (
+                name, email, password, created_at, level,
+                birth_date, phone, nr_bank_account, address,
+                type_of_service, rate, description
+            ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, NULL, NULL, NULL)
         ');
 
-        $hashedPassword = sha1($password); // Using sha1 for simplicity, but consider using password_hash() for security
-        return $stmt->execute(array($name, $email, $hashedPassword, $created_at, $birth_date, $phone, $nr_bank_account, $address));
+        $hashedPassword = sha1($password);
+        return $stmt->execute([
+            $name, $email, $hashedPassword, $created_at,
+            $birth_date, $phone, $nr_bank_account, $address
+        ]);
     }
 }
 ?>

@@ -46,11 +46,12 @@ if (isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['birth_dat
     } else {
         // If registration fails
         $session->addMessage('error', 'There was an error during registration.');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);  // Redirect back to the registration form
     }
 } else {
     // If required fields are missing
     $session->addMessage('error', 'Please fill all required fields!');
 }
 
-// header('Location: ' . $_SERVER['HTTP_REFERER']);  // Redirect back to the registration form
+
 ?>

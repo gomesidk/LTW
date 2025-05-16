@@ -15,9 +15,11 @@
     $session->setId($customer->id);
     $session->setName($customer->name());
     $session->addMessage('success', 'Login successful!');
+    header('Location: ../Pages/index.php');
+    exit();
   } else {
     $session->addMessage('error', 'Wrong password!');
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
   }
 
-  header('Location: ' . $_SERVER['HTTP_REFERER']);
 ?>

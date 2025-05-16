@@ -15,6 +15,7 @@
 
     public function logout() {
       session_destroy();
+      $_SESSION = array();
     }
 
     public function getId() : ?int {

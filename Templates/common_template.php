@@ -11,6 +11,21 @@ function drawHeader(Session $session) {
         <title>SkillFlow</title>
         <link rel="stylesheet" href="navbar.css">
     </head>
+    <script>
+  function toggleDropdown() {
+    const dropdown = document.getElementById("profileDropdown");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  }
+
+  // Optional: hide dropdown if user clicks outside
+  window.addEventListener('click', function (e) {
+    const profile = document.getElementById("profileCircle");
+    const dropdown = document.getElementById("profileDropdown");
+    if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = "none";
+    }
+  });
+</script>
     <body>
         <header class="navbar">
             <a href="index.html" class="logo">SkillFlow</a>
@@ -29,9 +44,15 @@ function drawHeader(Session $session) {
                 </nav>
                 <div class="auth-buttons" id="authButtons">
                     <?php if ($session->isLoggedIn()): ?>
-                        <div id="profileCircle" class="profile-circle" style="display:block;" onclick="window.location.href='profile.php'">
-                            <img src="../assets/icons/user.png" alt="Profile">
+                    <div class="profile-dropdown-container">
+                        <div id="profileCircle" class="profile-circle" onclick="toggleDropdown()">
+                        <img src="../assets/icons/user.png" alt="Profile">
                         </div>
+                        <div id="profileDropdown" class="dropdown-menu" style="display: none;">
+                        <a href="profile.php">Go to Profile</a>
+                        <a href="../Actions/Action_Logout.php">Logout</a>
+                        </div>
+                    </div>
                     <?php else: ?>
                         <button class="login" id="loginButton" onclick="window.location.href='login.php'">Log in</button>
                         <button class="signup" id="signupButton" onclick="window.location.href='register.php'">Sign up</button>

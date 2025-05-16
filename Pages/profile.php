@@ -33,13 +33,13 @@ drawHeader($session);
   <body>
     <section class="profile">
       <div class="profile-header">
-        <img src="https://via.placeholder.com/80" class="avatar" alt="Profile picture" />
+        <img src="../assets/icons/user.png" class="avatar" alt="Profile picture" />
         <div class="profile-info">
           <h1><?= htmlspecialchars($user->name) ?></h1>
-          <p>Matosinhos, Portugal – 10:15 am local time</p>
+          <p>Created at <?= htmlspecialchars($user->created_at) ?></p>
         </div>
-        <button class="public-view">See public view</button>
-        <button class="profile-settings">Profile settings</button>
+        <button class="public-view">See private view</button>
+        <button class="profile-settings" onclick="window.location.href='edit_profile.php';">Edit Profile</button>
       </div>
 
       <div class="profile-body">
@@ -49,18 +49,30 @@ drawHeader($session);
         </div>
 
         <div class="service-card">
-          <div class="service-header">
+        <div class="service-header">
+          <?php if (!is_null($user->type_of_service) && $user->type_of_service != ''): ?>
+            <h2><?= htmlspecialchars($user->type_of_service) ?></h2>
+          <?php else: ?>
+            <h2>Complete your profile</h2>
+          <?php endif; ?>
+          <?php if (!is_null($user->rate)): ?>
+            <span class="rate">$<?= number_format($user->rate, 2) ?>/hr</span>
+          <?php else: ?>
+            <span class="rate">No rate set</span>
+          <?php endif; ?>
+        </div>
+          <!-- <div class="service-header">
             <h2>Data Entry & Transcription Services</h2>
             <span class="rate">$5.40/hr</span>
-          </div>
+          </div> -->
           <p>
-            I am a computer engineering student who is able to do software and hardware. Whether you are trying to develop an app in Flutter or program a keyboard using i8254, I can help.
-            <br />
-            -Knows Python<br />
-            -Knows C++<br />
-            -Knows Assembly<br />
-            -Knows C...
+            <?php if (!empty($user->description)): ?>
+              <?= nl2br(htmlspecialchars($user->description)) ?>
+            <?php else: ?>
+              <em>Adding a service description increases your chances of getting hired — let clients know what you can do!</em>
+            <?php endif; ?>
           </p>
+
         </div>
 
         <div class="ads-card">
