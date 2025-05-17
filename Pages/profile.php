@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 // This file handles session and retrieves $user from the database
 require_once('../Templates/common_template.php');
-require_once(__DIR__ . '/../actions/Action_Retrieve_Profile.php');
+require_once(__DIR__ . '/../Actions/Action_Retrieve_Profile.php');
 ?>
 
 <?php

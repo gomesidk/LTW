@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../database/serviceClass.php');
 $session = new Session();
 $db = getDatabaseConnection();
 
-$services = Service::getServicesByCategory($db, 'Software Engineering');
+$services = Service::getServices($db);
 
 drawHeader($session);  // imprime <html>, <head>, <body>, header
 

@@ -109,23 +109,34 @@ function drawFooter() {
 
 
 function draw_service(Service $service) {
+    // Prepare URL with service ID or other needed params
+    $url = "apply_to_job.php?jobId=" . urlencode($service->id) .
+           "&jobTitle=" . urlencode($service->name) .
+           "&jobDescription=" . urlencode($service->description) .
+           "&category=" . urlencode($service->category) .
+           "&budget=" . urlencode($service->price);
+
     ?>
-    <div style="
-        border: 1px solid #ccc; 
-        padding: 15px; 
-        margin: 10px 0; 
-        border-radius: 8px; 
-        box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    <a href="<?= $url ?>" style="
+        text-decoration: none; 
+        color: inherit; 
+        display: block;
         max-width: 600px;
-    ">
+        margin: 10px 0;
+        border-radius: 8px;
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+        border: 1px solid #ccc;
+        padding: 15px;
+        ">
         <h2 style="margin: 0 0 10px 0;"><?= htmlspecialchars($service->name) ?></h2>
         <p style="margin: 0 0 8px 0;"><?= nl2br(htmlspecialchars($service->description)) ?></p>
         <p><strong>Category:</strong> <?= htmlspecialchars($service->category) ?></p>
         <p><strong>Price:</strong> $<?= number_format($service->price, 2) ?></p>
         <p><strong>Applications:</strong> <?= $service->number_applications ?></p>
         <p><small>Posted on: <?= htmlspecialchars($service->created_at) ?></small></p>
-    </div>
+    </a>
     <?php
 }
+
 
 ?>

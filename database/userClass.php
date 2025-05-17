@@ -17,7 +17,7 @@ class User {
     public ?float $rate;
     public ?string $description;
 
-    public function __construct(int $id, string $name, string $email, string $password, string $created_at, int $level, string $birth_date, string $phone, string $nr_bank_account, string $address, ?string $type_of_service, ?float $rate, ?string $description)
+    public function __construct(int $id, string $name, string $email, string $password, string $created_at, int $level, string $birth_date, string $phone, string $nr_bank_account, string $address, ?float $rate, ?string $description)
     {
         $this->id = $id;
         $this->name = $name;
@@ -30,7 +30,6 @@ class User {
         $this->phone = $phone;
         $this->nr_bank_account = $nr_bank_account;
         $this->address = $address;
-        $this->type_of_service = $type_of_service;
         $this->rate = $rate;
         $this->description = $description;
     }
@@ -42,7 +41,7 @@ class User {
     function save(PDO $db) {
         $stmt = $db->prepare('
             UPDATE User 
-            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, phone = ?, nr_bank_account = ?, address = ?, type_of_service = ?, rate = ?, description = ?
+            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, phone = ?, nr_bank_account = ?, address = ?, rate = ?, description = ?
             WHERE id = ?
         ');
         $stmt->execute(array(
@@ -56,7 +55,6 @@ class User {
             $this->phone,
             $this->nr_bank_account,
             $this->address,
-            $this->type_of_service,
             $this->rate,
             $this->description,
             $this->id
@@ -65,7 +63,7 @@ class User {
 
     static function getUserWithPassword(PDO $db, string $identifier, string $password) : ?User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, type_of_service, rate, description
+            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, rate, description
             FROM User
             WHERE (email = ? OR name = ? OR phone = ?)
               AND password = ?
@@ -87,7 +85,6 @@ class User {
                 $user['phone'],
                 $user['nr_bank_account'],
                 $user['address'],
-                $user['type_of_service'],
                 $user['rate'],
                 $user['description']
             );
@@ -98,7 +95,7 @@ class User {
     
     static function getUser(PDO $db, int $id) : User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date,phone, nr_bank_account, address, type_of_service, rate, description
+            SELECT id, name, email, password, created_at, level, birth_date,phone, nr_bank_account, address, rate, description
             FROM User 
             WHERE id = ?
         ');
@@ -117,7 +114,6 @@ class User {
             $user['phone'],
             $user['nr_bank_account'],
             $user['address'],
-            $user['type_of_service'],
             $user['rate'],
             $user['description']
         );
@@ -130,8 +126,8 @@ class User {
             INSERT INTO User (
                 name, email, password, created_at, level,
                 birth_date, phone, nr_bank_account, address,
-                type_of_service, rate, description
-            ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, NULL, NULL, NULL)
+                rate, description
+            ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, NULL, NULL)
         ');
 
         $hashedPassword = sha1($password);

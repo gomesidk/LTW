@@ -65,6 +65,35 @@ class Service {
         }
     }
 
+    static function incrementApplications(PDO $db, int $id) {
+        $stmt = $db->prepare('
+            UPDATE Service 
+            SET number_applications = number_applications + 1
+            WHERE id = ?
+        ');
+        $stmt->execute(array($id));
+    }
+
+    static function newApplication(PDO $db, int $service_id, int $worker_id) {
+        $stmt = $db->prepare('
+            INSERT INTO Application (service_id, user_id)
+            VALUES (?, ?)
+        ');
+        $stmt->execute(array($service_id, $worker_id));
+    }
+
+    static function isApplied(PDO $db, int $service_id, int $worker_id) : bool {
+        $stmt = $db->prepare('
+            SELECT COUNT(*) as count
+            FROM Application
+            WHERE service_id = ? AND user_id = ?
+        ');
+        $stmt->execute(array($service_id, $worker_id));
+        $result = $stmt->fetch();
+        
+        return $result['count'] > 0;
+    }
+
     // Static method to retrieve a service by ID
     static function getService(PDO $db, int $id) : Service {
         $stmt = $db->prepare('
@@ -150,7 +179,7 @@ class Service {
             SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id
             FROM Service
         ');
-        $stmt->execute(array($category));
+        $stmt->execute(array());
         $services = $stmt->fetchAll();
 
         $serviceObjects = [];
