@@ -4,6 +4,10 @@ declare(strict_types=1);
 // This file handles session and retrieves $user from the database
 require_once('../Templates/common_template.php');
 require_once(__DIR__ . '/../Actions/Action_Retrieve_Profile.php');
+require_once(__DIR__ . '/../Utils/Session.php');
+require_once(__DIR__ . '/../database/connection.php');
+require_once(__DIR__ . '/../database/serviceClass.php');
+require_once(__DIR__ . '/../database/userClass.php');
 ?>
 
 <?php
@@ -86,6 +90,16 @@ drawHeader($session);
 
 </body>
 </html>
+
+<?php
+$session = new Session();
+$db = getDatabaseConnection();
+$user = User::getUser($db, $session->getId());
+$user_services = Service::getServicesByBuyer($db, $user->id);
+foreach ($user_service as $user_services) {
+    draw_service($user_service);
+}
+?>
 
 <?php
 // Render header
