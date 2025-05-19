@@ -108,13 +108,21 @@ function drawFooter() {
 
 
 
-function draw_service(Service $service) {
+function draw_service(Service $service, User $user) {
     // Prepare URL with service ID or other needed params
-    $url = "apply_to_job.php?jobId=" . urlencode($service->id) .
-           "&jobTitle=" . urlencode($service->name) .
-           "&jobDescription=" . urlencode($service->description) .
-           "&category=" . urlencode($service->category) .
-           "&budget=" . urlencode($service->price);
+    if ($user->id === $service->buyer_id) {
+        $url =  "view_my_job.php?jobId=" . urlencode($service->id) . 
+                "&jobTitle=" . urlencode($service->name) .
+                "&jobDescription=" . urlencode($service->description) .
+                "&category=" . urlencode($service->category) .
+                "&budget=" . urlencode($service->price);
+    } else {
+        $url = "apply_to_job.php?jobId=" . urlencode($service->id) .
+               "&jobTitle=" . urlencode($service->name) .
+               "&jobDescription=" . urlencode($service->description) .
+               "&category=" . urlencode($service->category) .
+               "&budget=" . urlencode($service->price);
+    }
 
     ?>
     <a href="<?= $url ?>" style="
@@ -137,6 +145,26 @@ function draw_service(Service $service) {
     </a>
     <?php
 }
+
+function draw_user(User $user) {
+    ?>
+    <div class="user-card-container" style="margin-bottom: 20px; border: 2px solid #ccc; padding: 20px; width: 300px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div class="user-card">
+            <img src="../assets/icons/user.png" alt="User Avatar" class="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-bottom: 15px;">
+            <h3><?= htmlspecialchars($user->email) ?></h3>
+            <p><strong>Level:</strong> <?= number_format($user->level) ?></p>
+            <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($user->description)) ?></p>
+        </div>
+        <!-- Green Select Worker Button -->
+        <div class="button-container" style="margin-top: 15px;">
+            <button class="select-worker-btn" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                Select Worker
+            </button>
+        </div>
+    </div>
+    <?php
+}
+
 
 
 ?>

@@ -136,5 +136,38 @@ class User {
             $birth_date, $phone, $nr_bank_account, $address
         ]);
     }
+
+    static function get_Users_By_Service(PDO $db, int $service_id) : array {
+        $stmt = $db->prepare('
+            SELECT User.id, User.name, User.email, User.password, User.created_at, User.level, User.birth_date,
+                   User.phone, User.nr_bank_account, User.address, User.rate, User.description
+            FROM User
+            JOIN Application ON Application.user_id = User.id
+            WHERE Application.service_id = ?
+        ');
+        $stmt->execute([$service_id]);
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        $userObjects = [];
+        foreach ($users as $user) {
+            $userObjects[] = new User(
+                $user['id'],
+                $user['name'],
+                $user['email'],
+                $user['password'],
+                $user['created_at'],
+                $user['level'],
+                $user['birth_date'],
+                $user['phone'],
+                $user['nr_bank_account'],
+                $user['address'],
+                $user['rate'],
+                $user['description']
+            );
+        }
+    
+        return $userObjects;
+    }
+    
 }
 ?>

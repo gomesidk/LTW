@@ -208,5 +208,13 @@ class Service {
         ');
         $stmt->execute(array($worker_id, $service_id));
     }
+
+    static function deleteService(PDO $db, int $service_id) {
+        $stmt = $db->prepare('
+            DELETE FROM Service 
+            WHERE id = ?
+        ');
+        $stmt->execute(array($service_id));
+    }
 }
 ?>
