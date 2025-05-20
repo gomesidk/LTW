@@ -50,21 +50,6 @@ drawHeader($session);
 
         <div class="service-card">
         <div class="service-header">
-          <?php if (!is_null($user->type_of_service) && $user->type_of_service != ''): ?>
-            <h2><?= htmlspecialchars($user->type_of_service) ?></h2>
-          <?php else: ?>
-            <h2>Complete your profile</h2>
-          <?php endif; ?>
-          <?php if (!is_null($user->rate)): ?>
-            <span class="rate">$<?= number_format($user->rate, 2) ?>/hr</span>
-          <?php else: ?>
-            <span class="rate">No rate set</span>
-          <?php endif; ?>
-        </div>
-          <!-- <div class="service-header">
-            <h2>Data Entry & Transcription Services</h2>
-            <span class="rate">$5.40/hr</span>
-          </div> -->
           <p>
             <?php if (!empty($user->description)): ?>
               <?= nl2br(htmlspecialchars($user->description)) ?>
@@ -72,6 +57,13 @@ drawHeader($session);
               <em>Adding a service description increases your chances of getting hired — let clients know what you can do!</em>
             <?php endif; ?>
           </p>
+          <?php if (!is_null($user->rate)): ?>
+            <span class="rate">$<?= number_format($user->rate, 2) ?>/hr</span>
+          <?php else: ?>
+            <span class="rate">No rate set</span>
+          <?php endif; ?>
+        </div>
+          
 
         </div>
 

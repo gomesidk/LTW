@@ -17,3 +17,4 @@ foreach ($services as $service) {
 
 drawFooter(); // imprime footer, fecha body e html
 ?>
+ 

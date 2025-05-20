@@ -24,7 +24,7 @@ if ($user) {
     $user->phone = trim($_POST['phone'] ?? $user->phone);
     $user->nr_bank_account = trim($_POST['nr_bank_account'] ?? $user->nr_bank_account);
     $user->address = trim($_POST['address'] ?? $user->address);
-    $user->type_of_service = trim($_POST['type_of_service'] ?? $user->type_of_service);
+    // $user->type_of_service = trim($_POST['type_of_service'] ?? $user->type_of_service);
     if (isset($_POST['rate']) && $_POST['rate'] !== '') {
       $user->rate = floatval($_POST['rate']);
     } else {

@@ -77,7 +77,7 @@ class Service {
     static function newApplication(PDO $db, int $service_id, int $worker_id) {
         $stmt = $db->prepare('
             INSERT INTO Application (service_id, user_id)
-            VALUES (?, ?)
+            VALUES (?, ?) 
         ');
         $stmt->execute(array($service_id, $worker_id));
     }
