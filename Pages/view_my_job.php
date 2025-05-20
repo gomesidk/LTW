@@ -14,7 +14,8 @@
   $category = $_GET['category'] ?? 'Uncategorized';
   $budget = $_GET['budget'] ?? 'N/A';
   $jobId = $_GET['jobId'] ?? null;
-
+  
+  $service = Service::getService($db, $jobId);
   $applied_users = User::get_Users_By_Service($db, $jobId);
 
   // You could also fetch the job info by ID from DB here instead of GET params
@@ -36,7 +37,7 @@
   <main class="new-job-container">
     <div class="form-container">
       <h1>My Jobs</h1>
-      <form action="../Actions/Action_Delete_Service.php" method="POST" class="job-form">
+      <form class="job-form">
         <!-- Show job info as readonly inputs or text -->
 
         <label for="jobTitle">Job Title</label>
@@ -57,19 +58,26 @@
         <!-- <input type="hidden" name="jobId" value="<?= $jobId ?>" /> -->
 
         <section class="applied-users-container">
-            <h2 style="margin-bottom: 20px">Users Applied to This Job</h2>
-            <?php if (!empty($applied_users)): ?>
-                <?php foreach ($applied_users as $user): ?>
-                    <?php draw_user($user); ?>
-                <?php endforeach; ?>
+            <?php if (!$service->worker_id): ?>
+              <h2 style="margin-bottom: 20px">Users Applied to This Job</h2>
+              <?php if (!empty($applied_users)): ?>
+                  <?php foreach ($applied_users as $user): ?>
+                      <?php draw_user($user, $service); ?>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                  <p>No users have applied to this job yet.</p>
+              <?php endif; ?>
             <?php else: ?>
-                <p>No users have applied to this job yet.</p>
+              <h2 style="margin-bottom: 20px">Worker:</h2>
+              <?php draw_user(User::getUser($db, $service->worker_id), $service); ?>
             <?php endif; ?>
         </section>
-
-        <div class="submit-btn-container">
-          <button type="submit" class="submit-btn">Delete job</button>
-        </div>
+        <form action="../Actions/Action_Delete_Service.php" method="POST" class="job-form">
+          <input type="hidden" name="jobId" value="<?= htmlspecialchars($jobId) ?>" />
+          <div class="submit-btn-container">
+            <button type="submit" class="submit-btn">Delete job</button>
+          </div>
+        </form>
       </form>
     </div>
   </main>

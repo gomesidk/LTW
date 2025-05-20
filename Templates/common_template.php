@@ -146,7 +146,7 @@ function draw_service(Service $service, User $user) {
     <?php
 }
 
-function draw_user(User $user) {
+function draw_user(User $user, Service $service) {
     ?>
     <div class="user-card-container" style="margin-bottom: 20px; border: 2px solid #ccc; padding: 20px; width: 300px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <div class="user-card">
@@ -157,9 +157,14 @@ function draw_user(User $user) {
         </div>
         <!-- Green Select Worker Button -->
         <div class="button-container" style="margin-top: 15px;">
-            <button class="select-worker-btn" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                Select Worker
-            </button>
+            <form action="../Actions/Action_Select_Worker.php" method="POST">
+                <!-- Pass the user's ID to the Action_Select_Worker.php script -->
+                <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
+                <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
+                <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                    Select Worker
+                </button>
+            </form>
         </div>
     </div>
     <?php
