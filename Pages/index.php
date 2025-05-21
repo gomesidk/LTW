@@ -39,16 +39,44 @@ drawHeader($session);
     <h2>Categories</h2> <br>
     <div class="carousel-wrapper">
       <div class="categories-carousel" id="carousel">
-        <div class="category-card"><span>AI</span><img src="../assets/icons/ai.png" alt="AI Icon"></div>
-        <div class="category-card"><span>Data Science</span><img src="../assets/icons/data.png" alt="Data Icon"></div>
-        <div class="category-card"><span>Software Engineering</span><img src="../assets/icons/mobile.png" alt="Mobile Icon"></div>
-        <div class="category-card"><span>Hardware Engineering</span><img src="../assets/icons/firmware.png" alt="Firmware Icon"></div>
-        <div class="category-card"><span>Cybersecurity</span><img src="../assets/icons/cybersecurity.png" alt="Cybersecurity Icon"></div>
+        <form action="jobs_by_category.php" method="get" class="category-card">
+          <input type="hidden" name="category" value="Artificial Inteligence">
+          <button type="submit">
+            <span>AI</span><img src="../assets/icons/ai.png" alt="AI Icon">
+          </button>
+        </form>
+
+        <form action="jobs_by_category.php" method="get" class="category-card">
+          <input type="hidden" name="category" value="Data Science">
+          <button type="submit">
+            <span>Data Science</span><img src="../assets/icons/data.png" alt="Data Icon">
+          </button>
+        </form>
+
+        <form action="jobs_by_category.php" method="get" class="category-card">
+          <input type="hidden" name="category" value="Software Engineering">
+          <button type="submit">
+            <span>Software Engineering</span><img src="../assets/icons/mobile.png" alt="Mobile Icon">
+          </button>
+        </form>
+
+        <form action="jobs_by_category.php" method="get" class="category-card">
+          <input type="hidden" name="category" value="Hardware">
+          <button type="submit">
+            <span>Hardware Engineering</span><img src="../assets/icons/firmware.png" alt="Firmware Icon">
+          </button>
+        </form>
+
+        <form action="jobs_by_category.php" method="get" class="category-card">
+          <input type="hidden" name="category" value="Cybersecurity">
+          <button type="submit">
+            <span>Cybersecurity</span><img src="../assets/icons/cybersecurity.png" alt="Cybersecurity Icon">
+          </button>
+        </form>
       </div>
-      <button class="scroll-button scroll-button-left" onclick="scrollCarousel('left')">‹</button>
-      <button class="scroll-button scroll-button-right" onclick="scrollCarousel('right')">›</button>
     </div>
   </section>
+
 
   <section class="top-performers-section">
     <h2>Top Performers</h2> <br>
