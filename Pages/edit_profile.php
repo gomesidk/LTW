@@ -60,9 +60,6 @@ $user = User::getUser($db, (int)$session->getId());
             <label for="address">Address *</label>
             <input type="text" id="address" name="address" required value="<?= htmlspecialchars($user->address) ?>" />
 
-            <label for="type_of_service">Type of Service</label>
-            <input type="text" id="type_of_service" name="type_of_service" value="<?= htmlspecialchars($user->type_of_service ?? '') ?>" />
-
             <label for="rate">Rate (Hourly)</label>
             <input type="number" id="rate" name="rate" step="0.01" min="0" value="<?= htmlspecialchars($user->rate !== null ? (string)$user->rate : '') ?>" />
 

@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS "USER" (
     phone TEXT NOT NULL,
     nr_bank_account TEXT NOT NULL,
     address TEXT NOT NULL,
-    rate REAL DEFAULT 0 CHECK (rate >= 0 AND rate <= 5)
-, description TEXT DEFAULT '');
+    rate REAL DEFAULT 0, 
+    description TEXT DEFAULT '');
 
 CREATE TABLE Application (
     service_id INTEGER NOT NULL,

@@ -137,6 +137,7 @@ function draw_service(Service $service, User $user) {
         padding: 15px;
         ">
         <h2 style="margin: 0 0 10px 0;"><?= htmlspecialchars($service->name) ?></h2>
+        <p style="margin: 0 0 8px 0;"><strong>Created by: </strong><?= htmlspecialchars($user->name)?></p>
         <p style="margin: 0 0 8px 0;"><?= nl2br(htmlspecialchars($service->description)) ?></p>
         <p><strong>Category:</strong> <?= htmlspecialchars($service->category) ?></p>
         <p><strong>Price:</strong> $<?= number_format($service->price, 2) ?></p>
@@ -153,6 +154,7 @@ function draw_user(User $user, Service $service) {
             <img src="../assets/icons/user.png" alt="User Avatar" class="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-bottom: 15px;">
             <h3><?= htmlspecialchars($user->email) ?></h3>
             <p><strong>Level:</strong> <?= number_format($user->level) ?></p>
+            <p><strong>Rate: </strong> $<?= number_format($user->rate, 2) ?>/hr</p>
             <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($user->description)) ?></p>
         </div>
         <!-- Green Select Worker Button -->
