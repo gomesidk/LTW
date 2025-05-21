@@ -12,6 +12,7 @@ function drawHeader(Session $session) {
         <link rel="stylesheet" href="../css/navbar.css">
         <link rel="stylesheet" href="../css/jobs.css">
         <link rel="stylesheet" href="../css/footer.css">
+        <link rel="stylesheet" href="../css/service.css">
     </head>
     <script>
   function toggleDropdown() {
@@ -125,24 +126,22 @@ function draw_service(Service $service, User $user) {
     }
 
     ?>
-    <a href="<?= $url ?>" style="
-        text-decoration: none; 
-        color: inherit; 
-        display: block;
-        max-width: 600px;
-        margin: 10px 0;
-        border-radius: 8px;
-        box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-        border: 1px solid #ccc;
-        padding: 15px;
-        ">
-        <h2 style="margin: 0 0 10px 0;"><?= htmlspecialchars($service->name) ?></h2>
-        <p style="margin: 0 0 8px 0;"><strong>Created by: </strong><?= htmlspecialchars($user->name)?></p>
-        <p style="margin: 0 0 8px 0;"><?= nl2br(htmlspecialchars($service->description)) ?></p>
-        <p><strong>Category:</strong> <?= htmlspecialchars($service->category) ?></p>
-        <p><strong>Price:</strong> $<?= number_format($service->price, 2) ?></p>
-        <p><strong>Applications:</strong> <?= $service->number_applications ?></p>
-        <p><small>Posted on: <?= htmlspecialchars($service->created_at) ?></small></p>
+    <a href="<?= $url ?>" class="service-card">
+      <div class="service-card__header">
+        <h2 class="service-card__title"><?= htmlspecialchars($service->name) ?></h2>
+        <span class="service-card__price">$<?= number_format($service->price, 2) ?></span>
+      </div>
+      <div class="service-card__meta">
+        <span class="service-card__author">Created by <?= htmlspecialchars($user->name) ?></span>
+        <span class="service-card__date">Posted on <?= htmlspecialchars($service->created_at) ?></span>
+      </div>
+      <p class="service-card__desc">
+        <?= nl2br(htmlspecialchars($service->description)) ?>
+      </p>
+      <div class="service-card__footer">
+        <span class="service-card__category"><?= htmlspecialchars($service->category) ?></span>
+        <span class="service-card__apps"><?= $service->number_applications ?> applications</span>
+      </div>
     </a>
     <?php
 }
