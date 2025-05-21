@@ -51,7 +51,7 @@ if ($service) {
 if ($service && $user) {
     // Assign the worker to the service
     Service::setworker($db, $service->id, $user->id);
-    $service->save($db);
+    // $service->save($db);
 
     // Debugging: Confirm action has been performed
     echo "Worker (User ID: {$user->id}) successfully assigned to Service (Job ID: {$service->id}).<br>";

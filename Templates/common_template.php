@@ -157,6 +157,9 @@ function draw_user(User $user, Service $service) {
             <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($user->description)) ?></p>
         </div>
         <!-- Green Select Worker Button -->
+         <?php if ($service->worker_id): ?>
+            <p style="color: green; font-weight: bold;">Worker Hired</p>
+        <?php else: ?>
         <div class="button-container" style="margin-top: 15px;">
             <form action="../Actions/Action_Select_Worker.php" method="POST">
                 <!-- Pass the user's ID to the Action_Select_Worker.php script -->
@@ -167,6 +170,7 @@ function draw_user(User $user, Service $service) {
                 </button>
             </form>
         </div>
+        <?php endif; ?>
     </div>
     <?php
 }

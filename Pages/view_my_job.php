@@ -58,26 +58,34 @@
         <!-- <input type="hidden" name="jobId" value="<?= $jobId ?>" /> -->
 
         <section class="applied-users-container">
-            <?php if (!$service->worker_id): ?>
-              <h2 style="margin-bottom: 20px">Users Applied to This Job</h2>
-              <?php if (!empty($applied_users)): ?>
-                  <?php foreach ($applied_users as $user): ?>
-                      <?php draw_user($user, $service); ?>
-                  <?php endforeach; ?>
-              <?php else: ?>
-                  <p>No users have applied to this job yet.</p>
-              <?php endif; ?>
-            <?php else: ?>
-              <h2 style="margin-bottom: 20px">Worker:</h2>
-              <?php draw_user(User::getUser($db, $service->worker_id), $service); ?>
-            <?php endif; ?>
-        </section>
-        <form action="../Actions/Action_Delete_Service.php" method="POST" class="job-form">
-          <input type="hidden" name="jobId" value="<?= htmlspecialchars($jobId) ?>" />
-          <div class="submit-btn-container">
-            <button type="submit" class="submit-btn">Delete job</button>
-          </div>
-        </form>
+  <?php if ($service->worker_id): ?>
+    <?php
+      $worker = User::getUser($db, $service->worker_id);
+      if ($worker) {
+        draw_user($worker, $service); // Should not include "Select Worker" button
+      } else {
+        echo "<p>Selected worker not found.</p>";
+      }
+    ?>
+  <?php else: ?>
+    <h2 style="margin-bottom: 20px">Users Applied to This Job</h2>
+    <?php if (!empty($applied_users)): ?>
+      <?php foreach ($applied_users as $user): ?>
+        <?php draw_user($user, $service); ?>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <p>No users have applied to this job yet.</p>
+    <?php endif; ?>
+    <!-- Only show delete form if no worker is selected -->
+    <form action="../Actions/Action_Delete_Service.php" method="POST" class="job-form">
+      <input type="hidden" name="jobId" value="<?= htmlspecialchars($jobId) ?>" />
+      <div class="submit-btn-container">
+        <button type="submit" class="submit-btn">Delete job</button>
+      </div>
+    </form>
+  <?php endif; ?>
+</section>
+
       </div>
     </div>
   </main>

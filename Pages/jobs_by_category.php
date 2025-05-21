@@ -16,9 +16,16 @@ $services = Service::getServicesByCategory($db, $category);
 
 drawHeader($session);  // imprime <html>, <head>, <body>, header
 
-foreach ($services as $service) {
-    draw_service($service, $user); // imprime os cards
-}
+
+?>
+
+<div class="services-container">
+  <?php foreach ($services as $service): ?>
+    <?php draw_service($service, $user); ?>
+  <?php endforeach; ?>
+</div>
+
+<?php
 
 drawFooter(); // imprime footer, fecha body e html
 ?>
