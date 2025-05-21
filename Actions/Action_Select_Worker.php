@@ -22,16 +22,45 @@ require_once(__DIR__ . '/../database/serviceClass.php');
 
 $db = getDatabaseConnection();
 
-$user = User::getUser($db, $_POST['userId']);
-$service = Service::getService($db, $_POST['jobId']);
+// Get the current user ID from the session
+$userid = (int)$_POST['userId'];
+
+// Get the service ID from the form submission (POST)
+$serviceID = (int)$_POST['jobId'];
+
+// Debugging: Check if the user and service IDs are correct
+echo "User ID: " . $userid . "<br>";
+echo "Service ID: " . $serviceID . "<br>";
+
+$user = User::getUser($db, $userid);
+$service = Service::getService($db, $serviceID);
+
+// Debugging: Check if user and service are fetched correctly
+if ($user) {
+    echo "User found: " . $user->name() . "<br>";
+} else {
+    echo "User not found.<br>";
+}
+
+if ($service) {
+    echo "Service found: " . $service->name . "<br>";
+} else {
+    echo "Service not found.<br>";
+}
 
 if ($service && $user) {
+    // Assign the worker to the service
     Service::setworker($db, $service->id, $user->id);
     $service->save($db);
-    echo "Worker (User ID: {$user->id}) successfully assigned to Service (Job ID: {$service->id}).";
-    $session->addMessage('error', 'User or Service not found!');
+
+    // Debugging: Confirm action has been performed
+    echo "Worker (User ID: {$user->id}) successfully assigned to Service (Job ID: {$service->id}).<br>";
+
+    // Add a success message and redirect
+    $session->addMessage('success', 'Worker successfully assigned!');
 } else {
-    die('User or Service not found!');
+    // Debugging: Check if the issue is with missing user or service
+    echo "Error: User or Service not found.<br>";
     $session->addMessage('error', 'User or Service not found!');
 }
 

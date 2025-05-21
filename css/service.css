@@ -1,4 +1,4 @@
-.service-card {
+.service-card2 {
   display: block;
   max-width: 600px;
   margin: 1rem auto;
@@ -11,29 +11,29 @@
   color: inherit;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
-.service-card:hover {
+.service-card2:hover {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
-.service-card__header {
+.service-card2__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.75rem;
 }
-.service-card__title {
+.service-card2__title {
   font-size: 1.4rem;
   margin: 0;
   line-height: 1.2;
 }
-.service-card__price {
+.service-card2__price {
   font-size: 1.15rem;
   font-weight: bold;
   color: #14a800;
 }
 
-.service-card__meta {
+.service-card2__meta {
   display: flex;
   justify-content: space-between;
   font-size: 0.85rem;
@@ -41,25 +41,25 @@
   margin-bottom: 1rem;
 }
 
-.service-card__desc {
+.service-card2__desc {
   font-size: 1rem;
   color: #444;
   line-height: 1.5;
   margin-bottom: 1rem;
 }
 
-.service-card__footer {
+.service-card2__footer {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
   color: #555;
 }
-.service-card__category {
+.service-card2__category {
   background: #eef2f6;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
 }
-.service-card__apps {
+.service-card2__apps {
   font-style: italic;
 }
 
@@ -73,7 +73,7 @@
   margin: 0 auto;
 }
 
-.service-card {
+.service-card2 {
   flex: 0 1 calc(33.33% - 40px); /* 3 cards per row with gap accounted for */
   box-sizing: border-box;
   margin: 10px 0;

@@ -37,7 +37,7 @@
   <main class="new-job-container">
     <div class="form-container">
       <h1>My Jobs</h1>
-      <form class="job-form">
+      <div class="job-form">
         <!-- Show job info as readonly inputs or text -->
 
         <label for="jobTitle">Job Title</label>
@@ -78,7 +78,7 @@
             <button type="submit" class="submit-btn">Delete job</button>
           </div>
         </form>
-      </form>
+      </div>
     </div>
   </main>
 <?php drawFooter($session); ?>

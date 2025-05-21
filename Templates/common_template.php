@@ -126,21 +126,21 @@ function draw_service(Service $service, User $user) {
     }
 
     ?>
-    <a href="<?= $url ?>" class="service-card">
-      <div class="service-card__header">
-        <h2 class="service-card__title"><?= htmlspecialchars($service->name) ?></h2>
-        <span class="service-card__price">$<?= number_format($service->price, 2) ?></span>
+    <a href="<?= $url ?>" class="service-card2">
+      <div class="service-card2__header">
+        <h2 class="service-card2__title"><?= htmlspecialchars($service->name) ?></h2>
+        <span class="service-card2__price">$<?= number_format($service->price, 2) ?></span>
       </div>
-      <div class="service-card__meta">
-        <span class="service-card__author">Created by <?= htmlspecialchars($user->name) ?></span>
-        <span class="service-card__date">Posted on <?= htmlspecialchars($service->created_at) ?></span>
+      <div class="service-card2__meta">
+        <span class="service-card2__author">Created by <?= htmlspecialchars($user->name) ?></span>
+        <span class="service-card2__date">Posted on <?= htmlspecialchars($service->created_at) ?></span>
       </div>
-      <p class="service-card__desc">
+      <p class="service-card2__desc">
         <?= nl2br(htmlspecialchars($service->description)) ?>
       </p>
-      <div class="service-card__footer">
-        <span class="service-card__category"><?= htmlspecialchars($service->category) ?></span>
-        <span class="service-card__apps"><?= $service->number_applications ?> applications</span>
+      <div class="service-card2__footer">
+        <span class="service-card2__category"><?= htmlspecialchars($service->category) ?></span>
+        <span class="service-card2__apps"><?= $service->number_applications ?> applications</span>
       </div>
     </a>
     <?php
