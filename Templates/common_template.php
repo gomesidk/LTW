@@ -12,6 +12,7 @@ function drawHeader(Session $session) {
         <link rel="stylesheet" href="../css/navbar.css">
         <link rel="stylesheet" href="../css/jobs.css">
         <link rel="stylesheet" href="../css/footer.css">
+        <link rel="stylesheet" href="../css/service.css">
     </head>
     <script>
   function toggleDropdown() {
@@ -108,35 +109,72 @@ function drawFooter() {
 
 
 
-function draw_service(Service $service) {
+function draw_service(Service $service, User $user) {
     // Prepare URL with service ID or other needed params
-    $url = "apply_to_job.php?jobId=" . urlencode($service->id) .
-           "&jobTitle=" . urlencode($service->name) .
-           "&jobDescription=" . urlencode($service->description) .
-           "&category=" . urlencode($service->category) .
-           "&budget=" . urlencode($service->price);
+    if ($user->id === $service->buyer_id) {
+        $url =  "view_my_job.php?jobId=" . urlencode($service->id) . 
+                "&jobTitle=" . urlencode($service->name) .
+                "&jobDescription=" . urlencode($service->description) .
+                "&category=" . urlencode($service->category) .
+                "&budget=" . urlencode($service->price);
+    } else {
+        $url = "apply_to_job.php?jobId=" . urlencode($service->id) .
+               "&jobTitle=" . urlencode($service->name) .
+               "&jobDescription=" . urlencode($service->description) .
+               "&category=" . urlencode($service->category) .
+               "&budget=" . urlencode($service->price);
+    }
 
     ?>
-    <a href="<?= $url ?>" style="
-        text-decoration: none; 
-        color: inherit; 
-        display: block;
-        max-width: 600px;
-        margin: 10px 0;
-        border-radius: 8px;
-        box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-        border: 1px solid #ccc;
-        padding: 15px;
-        ">
-        <h2 style="margin: 0 0 10px 0;"><?= htmlspecialchars($service->name) ?></h2>
-        <p style="margin: 0 0 8px 0;"><?= nl2br(htmlspecialchars($service->description)) ?></p>
-        <p><strong>Category:</strong> <?= htmlspecialchars($service->category) ?></p>
-        <p><strong>Price:</strong> $<?= number_format($service->price, 2) ?></p>
-        <p><strong>Applications:</strong> <?= $service->number_applications ?></p>
-        <p><small>Posted on: <?= htmlspecialchars($service->created_at) ?></small></p>
+    <a href="<?= $url ?>" class="service-card2">
+      <div class="service-card2__header">
+        <h2 class="service-card2__title"><?= htmlspecialchars($service->name) ?></h2>
+        <span class="service-card2__price">$<?= number_format($service->price, 2) ?></span>
+      </div>
+      <div class="service-card2__meta">
+        <span class="service-card2__author">Created by <?= htmlspecialchars($user->name) ?></span>
+        <span class="service-card2__date">Posted on <?= htmlspecialchars($service->created_at) ?></span>
+      </div>
+      <p class="service-card2__desc">
+        <?= nl2br(htmlspecialchars($service->description)) ?>
+      </p>
+      <div class="service-card2__footer">
+        <span class="service-card2__category"><?= htmlspecialchars($service->category) ?></span>
+        <span class="service-card2__apps"><?= $service->number_applications ?> applications</span>
+      </div>
     </a>
     <?php
 }
+
+function draw_user(User $user, Service $service) {
+    ?>
+    <div class="user-card-container" style="margin-bottom: 20px; border: 2px solid #ccc; padding: 20px; width: 300px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div class="user-card">
+            <img src="../assets/icons/user.png" alt="User Avatar" class="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-bottom: 15px;">
+            <h3><?= htmlspecialchars($user->email) ?></h3>
+            <p><strong>Level:</strong> <?= number_format($user->level) ?></p>
+            <p><strong>Rate: </strong> $<?= number_format($user->rate, 2) ?>/hr</p>
+            <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($user->description)) ?></p>
+        </div>
+        <!-- Green Select Worker Button -->
+         <?php if ($service->worker_id): ?>
+            <p style="color: green; font-weight: bold;">Worker Hired</p>
+        <?php else: ?>
+        <div class="button-container" style="margin-top: 15px;">
+            <form action="../Actions/Action_Select_Worker.php" method="POST">
+                <!-- Pass the user's ID to the Action_Select_Worker.php script -->
+                <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
+                <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
+                <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                    Select Worker
+                </button>
+            </form>
+        </div>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
 
 
 ?>

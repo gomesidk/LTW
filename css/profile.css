@@ -72,10 +72,15 @@ button {
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
+   /* Add box shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  /* Optional: add a subtle border to enhance separation */
+  border: 1px solid #ddd;
 }
 
 .service-header {
-  display: flex;
+  display: flex; 
   justify-content: space-between;
   align-items: center;
 }

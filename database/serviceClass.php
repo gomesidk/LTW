@@ -199,5 +199,31 @@ class Service {
 
         return $serviceObjects;
     }
+
+    static function workerPicked(PDO $db, int $service_id, int $worker_id) {
+        $stmt = $db->prepare('
+            UPDATE Service 
+            SET worker_id = ?
+            WHERE id = ?
+        ');
+        $stmt->execute(array($worker_id, $service_id));
+    }
+
+    static function deleteService(PDO $db, int $service_id) {
+        $stmt = $db->prepare('
+            DELETE FROM Service 
+            WHERE id = ?
+        ');
+        $stmt->execute(array($service_id));
+    }
+
+    static function setworker(PDO $db, int $service_id, int $worker_id) {
+        $stmt = $db->prepare('
+            UPDATE Service 
+            SET worker_id = ?
+            WHERE id = ?
+        ');
+        $stmt->execute(array($worker_id, $service_id));
+    }
 }
 ?>

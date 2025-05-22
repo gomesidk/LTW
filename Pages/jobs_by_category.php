@@ -10,9 +10,12 @@ $db = getDatabaseConnection();
 
 $user = User::getUser($db, $session->getId());
 
-$services = Service::getServices($db);
+$category = $_GET['category'] ?? null;
+
+$services = Service::getServicesByCategory($db, $category);
 
 drawHeader($session);  // imprime <html>, <head>, <body>, header
+
 
 ?>
 
@@ -26,4 +29,3 @@ drawHeader($session);  // imprime <html>, <head>, <body>, header
 
 drawFooter(); // imprime footer, fecha body e html
 ?>
- 

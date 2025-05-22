@@ -1,17 +1,50 @@
-PRAGMA foreign_keys=off;
+CREATE TABLE sqlite_sequence(name,seq);
 
-DROP TABLE IF EXISTS User;
-DROP TABLE IF EXISTS Subscription;
-DROP TABLE IF EXISTS Message;
-DROP TABLE IF EXISTS Service;
-DROP TABLE IF EXISTS Transaction;
-DROP TABLE IF EXISTS Phase;
-DROP TABLE IF EXISTS Category;
-DROP TABLE IF EXISTS Application;
+CREATE TABLE Message (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sender_id INTEGER NOT NULL,
+    receiver_id INTEGER NOT NULL,
+    content TEXT NOT NULL,
+    timestamp TIMESTAMP ,
+    FOREIGN KEY (sender_id) REFERENCES User(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES User(id)
+        ON DELETE CASCADE
+);
 
-PRAGMA foreign_keys=on;
+CREATE TABLE Category (
+    name TEXT PRIMARY KEY NOT NULL,
+    description TEXT NOT NULL
+);
 
-CREATE TABLE User (
+CREATE TABLE Payment (
+    payment_id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Added payment_id for uniqueness
+    service_id INTEGER NOT NULL,
+    buyer_id INTEGER NOT NULL,
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status TEXT NOT NULL DEFAULT 'pending',
+    FOREIGN KEY (service_id) REFERENCES Service(id) ON DELETE CASCADE,
+    FOREIGN KEY (buyer_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "Service" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    price REAL NOT NULL,
+    created_at TIMESTAMP,
+    number_applications INTEGER DEFAULT 0,
+    category TEXT NOT NULL,
+    buyer_id INTEGER NOT NULL,
+    worker_id INTEGER,  -- NULL permitido
+    FOREIGN KEY (buyer_id) REFERENCES User(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (worker_id) REFERENCES User(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (category) REFERENCES Category(name)
+        ON DELETE CASCADE
+);
+CREATE TABLE IF NOT EXISTS "USER" (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
@@ -23,64 +56,13 @@ CREATE TABLE User (
     phone TEXT NOT NULL,
     nr_bank_account TEXT NOT NULL,
     address TEXT NOT NULL,
-    type_of_service TEXT,
-    rate REAL, 
-    description TEXT
-);
-
-CREATE TABLE Message (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    sender_id INTEGER NOT NULL,
-    receiver_id INTEGER NOT NULL,
-    content TEXT NOT NULL,
-    timestamp TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES User(id) ON DELETE CASCADE,
-    FOREIGN KEY (receiver_id) REFERENCES User(id) ON DELETE CASCADE
-);
-
-CREATE TABLE Category (
-    name TEXT PRIMARY KEY NOT NULL,
-    description TEXT NOT NULL
-);
-
-CREATE TABLE Service (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    description TEXT NOT NULL,
-    price REAL NOT NULL,
-    created_at TIMESTAMP,
-    number_applications INTEGER DEFAULT 0,
-    category TEXT NOT NULL,
-    buyer_id INTEGER NOT NULL,
-    worker_id INTEGER,
-    FOREIGN KEY (buyer_id) REFERENCES User(id) ON DELETE CASCADE,
-    FOREIGN KEY (worker_id) REFERENCES User(id) ON DELETE CASCADE,
-    FOREIGN KEY (category) REFERENCES Category(name) ON DELETE CASCADE
-); 
-
-CREATE TABLE Transaction (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    service_id INTEGER NOT NULL,
-    transaction_date TIMESTAMP,
-    status TEXT NOT NULL DEFAULT 'pending',
-    FOREIGN KEY (service_id) REFERENCES Service(id) ON DELETE CASCADE
-);
-
-CREATE TABLE Phase (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    service_id INTEGER NOT NULL,
-    phase_number INTEGER NOT NULL,
-    description TEXT NOT NULL,
-    start_date TIMESTAMP,
-    end_date TIMESTAMP,
-    FOREIGN KEY (service_id) REFERENCES Service(id) ON DELETE CASCADE
-);
-
+    rate REAL DEFAULT 0, 
+    description TEXT DEFAULT '');
 
 CREATE TABLE Application (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     service_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
+    PRIMARY KEY (service_id, user_id),
     FOREIGN KEY (service_id) REFERENCES Service(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
-)
+);
