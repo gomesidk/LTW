@@ -34,10 +34,23 @@ $user = User::getUser($db, (int)$session->getId());
             <!-- Default avatar image -->
             <img src="../assets/icons/default-avatar.png" alt="Profile Picture" />
         </div>
+        <form action="upload_image.php" method="get">
+                <button type="submit" style="
+                    background-color: #28a745; /* Green */
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 16px;
+                ">
+                    Change Profile Picture
+                </button>
+            </form>
         <h2><?= htmlspecialchars($user->name) ?></h2>
         <p>Member since <?= htmlspecialchars(date('F j, Y', strtotime($user->created_at))) ?></p>
     </aside>
-
+v
     <section class="profile-edit-form">
         <h1>Edit Your Profile</h1>
         <form method="POST" action="../Actions/Action_Edit_Profile.php">
