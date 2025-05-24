@@ -16,8 +16,23 @@ class User {
     public ?string $type_of_service;
     public ?float $rate;
     public ?string $description;
+    public ?int $profile_picture_id;  // Added property
 
-    public function __construct(int $id, string $name, string $email, string $password, string $created_at, int $level, string $birth_date, string $phone, string $nr_bank_account, string $address, ?float $rate, ?string $description)
+    public function __construct(
+        int $id,
+        string $name,
+        string $email,
+        string $password,
+        string $created_at,
+        int $level,
+        string $birth_date,
+        string $phone,
+        string $nr_bank_account,
+        string $address,
+        ?float $rate,
+        ?string $description,
+        ?int $profile_picture_id = null  // New constructor param with default
+    )
     {
         $this->id = $id;
         $this->name = $name;
@@ -32,6 +47,7 @@ class User {
         $this->address = $address;
         $this->rate = $rate;
         $this->description = $description;
+        $this->profile_picture_id = $profile_picture_id;  // Assign new property
     }
 
     function name() {
@@ -41,7 +57,7 @@ class User {
     function save(PDO $db) {
         $stmt = $db->prepare('
             UPDATE User 
-            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, phone = ?, nr_bank_account = ?, address = ?, rate = ?, description = ?
+            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, phone = ?, nr_bank_account = ?, address = ?, rate = ?, description = ?, profile_picture_id = ?
             WHERE id = ?
         ');
         $stmt->execute(array(
@@ -57,13 +73,14 @@ class User {
             $this->address,
             $this->rate,
             $this->description,
+            $this->profile_picture_id,  // Added here
             $this->id
         ));
     }
 
     static function getUserWithPassword(PDO $db, string $identifier, string $password) : ?User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, rate, description
+            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, rate, description, profile_picture_id
             FROM User
             WHERE (email = ? OR name = ? OR phone = ?)
               AND password = ?
@@ -86,7 +103,8 @@ class User {
                 $user['nr_bank_account'],
                 $user['address'],
                 $user['rate'],
-                $user['description']
+                $user['description'],
+                $user['profile_picture_id'] ?? null  // Pass profile_picture_id
             );
         } else {
             return null;
@@ -95,7 +113,7 @@ class User {
     
     static function getUser(PDO $db, int $id) : User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date,phone, nr_bank_account, address, rate, description
+            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, rate, description, profile_picture_id
             FROM User 
             WHERE id = ?
         ');
@@ -115,7 +133,8 @@ class User {
             $user['nr_bank_account'],
             $user['address'],
             $user['rate'],
-            $user['description']
+            $user['description'],
+            $user['profile_picture_id'] ?? null  // Pass profile_picture_id
         );
     }
 
@@ -126,8 +145,8 @@ class User {
             INSERT INTO User (
                 name, email, password, created_at, level,
                 birth_date, phone, nr_bank_account, address,
-                rate, description
-            ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, NULL, NULL)
+                rate, description, profile_picture_id
+            ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, NULL, NULL, NULL)
         ');
 
         $hashedPassword = sha1($password);
@@ -140,7 +159,7 @@ class User {
     static function get_Users_By_Service(PDO $db, int $service_id) : array {
         $stmt = $db->prepare('
             SELECT User.id, User.name, User.email, User.password, User.created_at, User.level, User.birth_date,
-                   User.phone, User.nr_bank_account, User.address, User.rate, User.description
+                   User.phone, User.nr_bank_account, User.address, User.rate, User.description, User.profile_picture_id
             FROM User
             JOIN Application ON Application.user_id = User.id
             WHERE Application.service_id = ?
@@ -162,7 +181,8 @@ class User {
                 $user['nr_bank_account'],
                 $user['address'],
                 $user['rate'],
-                $user['description']
+                $user['description'],
+                $user['profile_picture_id'] ?? null
             );
         }
     

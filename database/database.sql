@@ -1,6 +1,5 @@
-CREATE TABLE sqlite_sequence(name,seq);
 
-CREATE TABLE Message (
+CREATE TABLE IF NOT EXISTS "Message" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     sender_id INTEGER NOT NULL,
     receiver_id INTEGER NOT NULL,
@@ -12,12 +11,12 @@ CREATE TABLE Message (
         ON DELETE CASCADE
 );
 
-CREATE TABLE Category (
+CREATE TABLE IF NOT EXISTS "Category" (
     name TEXT PRIMARY KEY NOT NULL,
     description TEXT NOT NULL
 );
 
-CREATE TABLE Payment (
+CREATE TABLE IF NOT EXISTS "Payment" (
     payment_id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Added payment_id for uniqueness
     service_id INTEGER NOT NULL,
     buyer_id INTEGER NOT NULL,
@@ -44,7 +43,8 @@ CREATE TABLE IF NOT EXISTS "Service" (
     FOREIGN KEY (category) REFERENCES Category(name)
         ON DELETE CASCADE
 );
-CREATE TABLE IF NOT EXISTS "USER" (
+
+CREATE TABLE IF NOT EXISTS "User" (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
@@ -52,17 +52,25 @@ CREATE TABLE IF NOT EXISTS "USER" (
     created_at TEXT,
     level INTEGER NOT NULL DEFAULT 1,
     birth_date TEXT NOT NULL,
-    profile_picture TEXT,
+    profile_picture_id INTEGER,
     phone TEXT NOT NULL,
     nr_bank_account TEXT NOT NULL,
     address TEXT NOT NULL,
     rate REAL DEFAULT 0, 
-    description TEXT DEFAULT '');
+    description TEXT DEFAULT '',
+    FOREIGN KEY (profile_picture_id) REFERENCES Images(id)
+        ON DELETE SET NULL
+);
 
-CREATE TABLE Application (
+CREATE TABLE IF NOT EXISTS "Application" (
     service_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     PRIMARY KEY (service_id, user_id),
     FOREIGN KEY (service_id) REFERENCES Service(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "Images" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL
 );

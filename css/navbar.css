@@ -111,21 +111,22 @@
 }
 
 .profile-circle {
-  width: 40px;
+  width: 40px;           /* circle diameter */
   height: 40px;
-  border-radius: 50%;
-  background-color: #28a745;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  border-radius: 50%;    /* circle shape */
+  overflow: hidden;      /* crop overflow */
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
 }
 
 .profile-circle img {
-  width: 100%;
+  width: 100%;           /* fill the container */
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;     /* maintain aspect ratio, cover fully */
+  display: block;
 }
+
 
 .profile-circle:hover {
   background-color: #218838;
