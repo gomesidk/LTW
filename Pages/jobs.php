@@ -10,7 +10,14 @@ $db = getDatabaseConnection();
 
 $user = User::getUser($db, $session->getId());
 
-$services = Service::getServices($db);
+$searchQuery = isset($_GET['query']) ? trim($_GET['query']) : '';
+if (!empty($searchQuery)) {
+    $services = Service::searchServices($db, $searchQuery);
+} else {
+    $services = Service::getServices($db);
+}
+
+
 
 drawHeader($session);  // imprime <html>, <head>, <body>, header
 
@@ -22,7 +29,6 @@ drawHeader($session);  // imprime <html>, <head>, <body>, header
   </div>
   <div class="services-container">
     <?php
-      $services = Service::getServices($db);
       foreach ($services as $service) {
         draw_service($service, $user);
       }

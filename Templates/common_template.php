@@ -29,6 +29,33 @@ function drawHeader(Session $session) {
     }
   });
 
+  function handleSearch() {
+    const query = document.getElementById("searchInput").value.trim();
+    if (query === "") return;
+
+    const currentPage = window.location.pathname.split("/").pop();
+
+    if (currentPage === "jobs.php") {
+        // Reload current page with search param
+        window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
+    } else {
+        // Redirect to jobs.php with query
+        window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
+    }
+
+}
+  function handleSearchKeyPress(event) {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener('keypress', handleSearchKeyPress);
+  });
+
+
   
 </script>
     <body>
@@ -41,11 +68,11 @@ function drawHeader(Session $session) {
                     <a href="newjobs.php">New</a>
                     <a href="about.php">About</a>
                     <div class="search-bar">
-                        <input type="text" placeholder="Search..." class="search-input">
-                        <button type="submit" class="search-button">
-                            <img src="../assets/icons/search.png" alt="Search">
-                        </button>
-                    </div>
+                      <input type="text" placeholder="Search..." class="search-input" id="searchInput">
+                      <button type="button" class="search-button" onclick="handleSearch()">
+                          <img src="../assets/icons/search.png" alt="Search">
+                      </button>
+                  </div>
                 </nav>
                 <div class="auth-buttons" id="authButtons">
                     <?php if ($session->isLoggedIn()): ?>
