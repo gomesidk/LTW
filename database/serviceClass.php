@@ -225,5 +225,28 @@ class Service {
         ');
         $stmt->execute(array($worker_id, $service_id));
     }
+
+    public static function searchServices(PDO $db, string $query): array {
+    $stmt = $db->prepare('
+        SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id
+        FROM Service
+        WHERE name LIKE ? OR description LIKE ?
+    ');
+    $likeQuery = '%' . $query . '%';
+    $stmt->execute([$likeQuery, $likeQuery]);
+
+    $services = [];
+    while ($row = $stmt->fetch()) {
+        $services[] = new Service(
+            $row['id'], $row['name'], $row['description'],
+            $row['price'], $row['created_at'],
+            $row['number_applications'], $row['category'],
+            $row['buyer_id'], $row['worker_id']
+        );
+    }
+    return $services;
+}
+
+    
 }
 ?>

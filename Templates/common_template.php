@@ -28,6 +28,35 @@ function drawHeader(Session $session) {
       dropdown.style.display = "none";
     }
   });
+
+  function handleSearch() {
+    const query = document.getElementById("searchInput").value.trim();
+    if (query === "") return;
+
+    const currentPage = window.location.pathname.split("/").pop();
+
+    if (currentPage === "jobs.php") {
+        // Reload current page with search param
+        window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
+    } else {
+        // Redirect to jobs.php with query
+        window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
+    }
+
+}
+  function handleSearchKeyPress(event) {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener('keypress', handleSearchKeyPress);
+  });
+
+
+  
 </script>
     <body>
         <header class="navbar">
@@ -39,11 +68,11 @@ function drawHeader(Session $session) {
                     <a href="newjobs.php">New</a>
                     <a href="about.php">About</a>
                     <div class="search-bar">
-                        <input type="text" placeholder="Search..." class="search-input">
-                        <button type="submit" class="search-button">
-                            <img src="../assets/icons/search.png" alt="Search">
-                        </button>
-                    </div>
+                      <input type="text" placeholder="Search..." class="search-input" id="searchInput">
+                      <button type="button" class="search-button" onclick="handleSearch()">
+                          <img src="../assets/icons/search.png" alt="Search">
+                      </button>
+                  </div>
                 </nav>
                 <div class="auth-buttons" id="authButtons">
                     <?php if ($session->isLoggedIn()): ?>
@@ -194,3 +223,57 @@ function draw_user(User $user, Service $service) {
 
 
 ?>
+
+
+<?php
+function drawServiceFilterSidebar(PDO $db) {
+  // Fetch categories dynamically from DB if you want, otherwise hardcode as below
+  $categories = $db->query('SELECT name FROM Category')->fetchAll(PDO::FETCH_COLUMN);
+  ?>
+  <div>
+    <h3>Filter Services</h3>
+
+    <div style="margin-bottom: 15px;">
+      <label for="filter-category" style="display: block; font-weight: bold;">Category:</label>
+      <select id="filter-category" style="width: 100%; padding: 5px;">
+        <option value="">All</option>
+        <?php foreach ($categories as $category): ?>
+          <option value="<?= htmlspecialchars($category) ?>"><?= htmlspecialchars($category) ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="filter-min-price" style="display: block; font-weight: bold;">Minimum Price:</label>
+      <input type="number" id="filter-min-price" style="width: 100%; padding: 5px;" placeholder="e.g. 20" min="0" />
+    </div>
+
+    <button id="apply-filters" style="width: 100%; padding: 10px; background-color: #14a800; color: white; border: none; border-radius: 5px;">
+      Apply Filters
+    </button>
+  </div>
+
+  <script>
+    document.getElementById('apply-filters').addEventListener('click', function() {
+      const category = document.getElementById('filter-category').value;
+      const minPrice = document.getElementById('filter-min-price').value;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '../Actions/Action_Filter_Service.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          document.querySelector('.services-container').innerHTML = xhr.responseText;
+        } else {
+          alert('Error loading filtered services.');
+        }
+      };
+
+      xhr.send(`category=${encodeURIComponent(category)}&min_price=${encodeURIComponent(minPrice)}`);
+    });
+  </script>
+  <?php
+}
+?>
+

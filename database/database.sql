@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS "Service" (
     category TEXT NOT NULL,
     buyer_id INTEGER NOT NULL,
     worker_id INTEGER,  -- NULL permitido
+    hired TEXT NOT NULL DEFAULT 'No',
     FOREIGN KEY (buyer_id) REFERENCES User(id)
         ON DELETE CASCADE,
     FOREIGN KEY (worker_id) REFERENCES User(id)
@@ -60,7 +61,8 @@ CREATE TABLE IF NOT EXISTS "User" (
     description TEXT DEFAULT '',
     FOREIGN KEY (profile_picture_id) REFERENCES Images(id)
         ON DELETE SET NULL
-);
+,
+    user_type TEXT NOT NULL DEFAULT 'user');
 
 CREATE TABLE IF NOT EXISTS "Application" (
     service_id INTEGER NOT NULL,

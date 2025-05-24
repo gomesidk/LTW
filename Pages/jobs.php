@@ -10,16 +10,30 @@ $db = getDatabaseConnection();
 
 $user = User::getUser($db, $session->getId());
 
-$services = Service::getServices($db);
+$searchQuery = isset($_GET['query']) ? trim($_GET['query']) : '';
+if (!empty($searchQuery)) {
+    $services = Service::searchServices($db, $searchQuery);
+} else {
+    $services = Service::getServices($db);
+}
+
+
 
 drawHeader($session);  // imprime <html>, <head>, <body>, header
 
 ?>
 
-<div class="services-container">
-  <?php foreach ($services as $service): ?>
-    <?php draw_service($service, $user); ?>
-  <?php endforeach; ?>
+<div class="job-page-layout">
+  <div class="filter-sidebar">
+    <?php drawServiceFilterSidebar($db); ?>
+  </div>
+  <div class="services-container">
+    <?php
+      foreach ($services as $service) {
+        draw_service($service, $user);
+      }
+    ?>
+  </div>
 </div>
 
 <?php
