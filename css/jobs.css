@@ -15,3 +15,30 @@ body {
     font-family: inherit;
   }
   
+  .job-page-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.filter-sidebar {
+  margin-top: 30px;
+  flex: 0 0 250px;
+  background-color: #fff;
+  padding: 0px 17px 17px 17px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.services-container {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}

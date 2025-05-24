@@ -16,10 +16,18 @@ drawHeader($session);  // imprime <html>, <head>, <body>, header
 
 ?>
 
-<div class="services-container">
-  <?php foreach ($services as $service): ?>
-    <?php draw_service($service, $user); ?>
-  <?php endforeach; ?>
+<div class="job-page-layout">
+  <div class="filter-sidebar">
+    <?php drawServiceFilterSidebar($db); ?>
+  </div>
+  <div class="services-container">
+    <?php
+      $services = Service::getServices($db);
+      foreach ($services as $service) {
+        draw_service($service, $user);
+      }
+    ?>
+  </div>
 </div>
 
 <?php

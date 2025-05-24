@@ -225,5 +225,7 @@ class Service {
         ');
         $stmt->execute(array($worker_id, $service_id));
     }
+
+    
 }
 ?>

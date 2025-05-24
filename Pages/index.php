@@ -78,7 +78,7 @@ drawHeader($session);
   </section>
 
 
-  <section class="top-performers-section">
+  <!-- <section class="top-performers-section">
     <h2>Top Performers</h2> <br>
     <div class="top-performers-carousel-wrapper">
       <div class="top-performers-carousel" id="top-performers-carousel">
@@ -96,7 +96,7 @@ drawHeader($session);
       <button class="scroll-button scroll-button-left-top" onclick="scrollTopPerformers('left')">‹</button>
       <button class="scroll-button scroll-button-right-top" onclick="scrollTopPerformers('right')">›</button>
     </div>
-  </section>
+  </section> -->
 </body>
 <script>
   window.onload = function() {

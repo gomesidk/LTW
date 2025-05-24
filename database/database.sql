@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS "Service" (
     category TEXT NOT NULL,
     buyer_id INTEGER NOT NULL,
     worker_id INTEGER,  -- NULL permitido
+    hired TEXT NOT NULL DEFAULT 'No',
     FOREIGN KEY (buyer_id) REFERENCES User(id)
         ON DELETE CASCADE,
     FOREIGN KEY (worker_id) REFERENCES User(id)
@@ -57,7 +58,8 @@ CREATE TABLE IF NOT EXISTS "USER" (
     nr_bank_account TEXT NOT NULL,
     address TEXT NOT NULL,
     rate REAL DEFAULT 0, 
-    description TEXT DEFAULT '');
+    description TEXT DEFAULT '',
+    user_type TEXT NOT NULL DEFAULT 'user');
 
 CREATE TABLE Application (
     service_id INTEGER NOT NULL,
