@@ -31,7 +31,15 @@ drawHeader($session);
 
   <section class="profile">
     <div class="profile-header">
-      <img src="../assets/icons/user.png" class="avatar" alt="Profile picture" />
+      <?php $imageId = $user->profile_picture_id ?? null; 
+            $imageIdString = (string)$imageId; ?>
+      <div class="profile-picture">
+        <?php if ($imageId): ?>
+          <img src="../Actions/images/originals/<?= htmlspecialchars($imageIdString) ?>.jpg" alt="Profile Picture" />
+        <?php else: ?>
+          <img src="../assets/icons/default-avatar.png" alt="Default Profile Picture" />
+        <?php endif; ?>
+      </div>
       <div class="profile-info">
         <h1><?= htmlspecialchars($user->name) ?></h1>
         <p>Created at <?= htmlspecialchars($user->created_at) ?></p>

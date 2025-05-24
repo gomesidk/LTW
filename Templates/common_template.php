@@ -47,19 +47,31 @@ function drawHeader(Session $session) {
                 </nav>
                 <div class="auth-buttons" id="authButtons">
                     <?php if ($session->isLoggedIn()): ?>
-                    <div class="profile-dropdown-container">
-                        <div id="profileCircle" class="profile-circle" onclick="toggleDropdown()">
-                        <img src="../assets/icons/user.png" alt="Profile">
+                        <div class="profile-dropdown-container">
+                            <div id="profileCircle" class="profile-circle" onclick="toggleDropdown()">
+                                <?php 
+                                    require_once(__DIR__ . '/../database/connection.php');
+                                    require_once(__DIR__ . '/../database/userClass.php');
+                                    $db = getDatabaseConnection();
+                                    $user = User::getUser($db, $session->getId());
+                                    if ($user->profile_picture_id): 
+                                ?>
+                                    <img src="../Actions/images/originals/<?= htmlspecialchars((string)$user->profile_picture_id) ?>.jpg" alt="Profile Picture" />
+                                <?php else: ?>
+                                    <img src="../assets/icons/user.png" alt="Profile" />
+                                <?php endif; ?>
+                            </div>
+                            <div id="profileDropdown" class="dropdown-menu" style="display: none;">
+                                <a href="profile.php">Go to Profile</a>
+                                <a href="../Actions/Action_Logout.php">Logout</a>
+                            </div>
                         </div>
-                        <div id="profileDropdown" class="dropdown-menu" style="display: none;">
-                        <a href="profile.php">Go to Profile</a>
-                        <a href="../Actions/Action_Logout.php">Logout</a>
-                        </div>
-                    </div>
+
                     <?php else: ?>
                         <button class="login" id="loginButton" onclick="window.location.href='login.php'">Log in</button>
                         <button class="signup" id="signupButton" onclick="window.location.href='register.php'">Sign up</button>
                     <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </header>
@@ -150,7 +162,11 @@ function draw_user(User $user, Service $service) {
     ?>
     <div class="user-card-container" style="margin-bottom: 20px; border: 2px solid #ccc; padding: 20px; width: 300px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <div class="user-card">
-            <img src="../assets/icons/user.png" alt="User Avatar" class="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-bottom: 15px;">
+            <?php if (!is_null($user->profile_picture_id)): ?>
+                <img src="../Actions/images/originals/<?= htmlspecialchars((string)$user->profile_picture_id) ?>.jpg" alt="User Avatar" class="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-bottom: 15px;">
+            <?php else: ?>
+                <img src="../assets/icons/user.png" alt="User Avatar" class="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-bottom: 15px;">
+            <?php endif; ?>
             <h3><?= htmlspecialchars($user->email) ?></h3>
             <p><strong>Level:</strong> <?= number_format($user->level) ?></p>
             <p><strong>Rate: </strong> $<?= number_format($user->rate, 2) ?>/hr</p>

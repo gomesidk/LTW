@@ -75,9 +75,11 @@ imagejpeg($small, $smallFileName);
 $mediumWidth = $width;
 $mediumHeight = $height;
 if ($mediumWidth > 400) {
-    $mediumHeight = (int)$mediumHeight * (int)(400 / $mediumWidth);
+    $scale = 400 / $mediumWidth;
     $mediumWidth = 400;
+    $mediumHeight = (int)($mediumHeight * $scale);
 }
+
 
 // Cria imagem média redimensionada
 $medium = imagecreatetruecolor($mediumWidth, $mediumHeight);
