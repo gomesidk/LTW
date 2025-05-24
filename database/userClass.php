@@ -188,6 +188,20 @@ class User {
     
         return $userObjects;
     }
+
+    static function rateUser(int $db, int $user_id, int $rating) : bool {
+        // Ensure rating is between 0 and 5
+        if ($rating < 0 || $rating > 5) {
+            return false; // Invalid rating
+        }
+
+        $stmt = $db->prepare('
+            UPDATE User 
+            SET rate = rate + ((? - rate) / level)
+            WHERE id = ?
+        ');
+        return $stmt->execute([$rating, $user_id]);
+    }
     
 }
 ?>
