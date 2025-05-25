@@ -2,8 +2,14 @@
   // Include the session and header/footer functions
   require_once('../Templates/common_template.php');
   require_once(__DIR__ . '/../Utils/Session.php');
+  require_once(__DIR__ . '/../database/connection.php');
   $session = new Session(); // Initialize session
+  $db = getDatabaseConnection(); // Replace with your actual function if different
+
+  $stmt = $db->query("SELECT name FROM Category ORDER BY name");
+  $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 
 <?php
 // Render header
@@ -36,67 +42,25 @@ drawHeader($session);
   </div>
 
   <section class="categories-section">
-    <h2>Categories</h2> <br>
-    <div class="carousel-wrapper">
-      <div class="categories-carousel" id="carousel">
-        <form action="jobs_by_category.php" method="get" class="category-card">
-          <input type="hidden" name="category" value="Artificial Inteligence">
-          <button type="submit">
-            <span>AI</span><img src="../assets/icons/ai.png" alt="AI Icon">
-          </button>
-        </form>
+  <h2>Categories</h2> <br>
+  <div class="categories-grid">
+    <?php foreach ($categories as $category): 
+      $name = htmlspecialchars($category['name']);
+    ?>
+      <form action="jobs_by_category.php" method="get" class="category-card">
+        <input type="hidden" name="category" value="<?= $name ?>">
+        <button type="submit" style="width: 100%; height: 100%; border:none; background:none;">
+          <span><?= $name ?></span>
+        </button>
+      </form>
+    <?php endforeach; ?>
+  </div>
 
-        <form action="jobs_by_category.php" method="get" class="category-card">
-          <input type="hidden" name="category" value="Data Science">
-          <button type="submit">
-            <span>Data Science</span><img src="../assets/icons/data.png" alt="Data Icon">
-          </button>
-        </form>
-
-        <form action="jobs_by_category.php" method="get" class="category-card">
-          <input type="hidden" name="category" value="Software Engineering">
-          <button type="submit">
-            <span>Software Engineering</span><img src="../assets/icons/mobile.png" alt="Mobile Icon">
-          </button>
-        </form>
-
-        <form action="jobs_by_category.php" method="get" class="category-card">
-          <input type="hidden" name="category" value="Hardware">
-          <button type="submit">
-            <span>Hardware Engineering</span><img src="../assets/icons/firmware.png" alt="Firmware Icon">
-          </button>
-        </form>
-
-        <form action="jobs_by_category.php" method="get" class="category-card">
-          <input type="hidden" name="category" value="Cybersecurity">
-          <button type="submit">
-            <span>Cybersecurity</span><img src="../assets/icons/cybersecurity.png" alt="Cybersecurity Icon">
-          </button>
-        </form>
-      </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
-  <!-- <section class="top-performers-section">
-    <h2>Top Performers</h2> <br>
-    <div class="top-performers-carousel-wrapper">
-      <div class="top-performers-carousel" id="top-performers-carousel">
-        <div class="performer-card">Performer 1</div>
-        <div class="performer-card">Performer 2</div>
-        <div class="performer-card">Performer 3</div>
-        <div class="performer-card">Performer 4</div>
-        <div class="performer-card">Performer 5</div>
-        <div class="performer-card">Performer 6</div>
-        <div class="performer-card">Performer 7</div>
-        <div class="performer-card">Performer 8</div>
-        <div class="performer-card">Performer 9</div>
-        <div class="performer-card">Performer 10</div>
-      </div>
-      <button class="scroll-button scroll-button-left-top" onclick="scrollTopPerformers('left')">‹</button>
-      <button class="scroll-button scroll-button-right-top" onclick="scrollTopPerformers('right')">›</button>
-    </div>
-  </section> -->
 </body>
 <script>
   window.onload = function() {

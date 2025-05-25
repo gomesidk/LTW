@@ -2,7 +2,12 @@
   // Include the session and header/footer functions
   require_once('../Templates/common_template.php');
   require_once(__DIR__ . '/../Utils/Session.php');
+  require_once(__DIR__ . '/../database/connection.php');
   $session = new Session(); // Initialize session
+  $db = getDatabaseConnection(); // Use your DB connection function
+
+  $stmt = $db->query("SELECT name FROM Category ORDER BY name");
+  $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <?php
@@ -32,13 +37,13 @@ drawHeader($session);
                 <textarea id="jobDescription" name="jobDescription" rows="5" placeholder="Describe the job requirements" required></textarea>
 
                 <label for="category">Job Category</label>
-                <select id="category" name="category" required>
-                    <option value="Software Engineering">Software Engineering</option>
-                    <option value="Hardware">Hardware</option>
-                    <option value="Artificial Inteligence">Artificial Inteligence</option>
-                    <option value="Data Science">Data Science</option>
-                    <option value="Cybersecurity">Cybersecurity</option>
-                </select>
+                    <select id="category" name="category" required>
+                    <?php foreach ($categories as $category): 
+                        $name = htmlspecialchars($category['name']);
+                    ?>
+                        <option value="<?= $name ?>"><?= $name ?></option>
+                    <?php endforeach; ?>
+                    </select>
 
                 <label for="budget">Budget</label>
                 <input type="number" id="budget" name="budget" placeholder="Enter your budget" required>

@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS "Message" (
 );
 
 CREATE TABLE IF NOT EXISTS "Category" (
-    name TEXT PRIMARY KEY NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
     description TEXT NOT NULL
 );
 
@@ -59,10 +60,10 @@ CREATE TABLE IF NOT EXISTS "User" (
     address TEXT NOT NULL,
     rate INTEGER DEFAULT 0, 
     description TEXT DEFAULT '',
+    user_type TEXT NOT NULL DEFAULT 'user',
     FOREIGN KEY (profile_picture_id) REFERENCES Images(id)
         ON DELETE SET NULL
-,
-    user_type TEXT NOT NULL DEFAULT 'user');
+    );
 
 CREATE TABLE IF NOT EXISTS "Application" (
     service_id INTEGER NOT NULL,

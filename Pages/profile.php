@@ -44,7 +44,11 @@ drawHeader($session);
         <h1><?= htmlspecialchars($user->name) ?></h1>
         <p>Created at <?= htmlspecialchars($user->created_at) ?></p>
       </div>
-      <button class="public-view">See private view</button>
+      <?php if ($user->user_type == "admin"): ?>
+        <button class="public-view" onclick="window.location.href='admin_manage.php'">Execute admin functions</button>
+      <?php else: ?>
+        <button class="public-view" onclick="window.location.href='be_admin.php'">Register as an admin</button>
+      <?php endif; ?>
       <button class="profile-settings" onclick="window.location.href='edit_profile.php';">Edit Profile</button>
     </div>
 

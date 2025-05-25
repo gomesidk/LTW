@@ -83,6 +83,11 @@ function drawHeader(Session $session) {
                                     require_once(__DIR__ . '/../database/userClass.php');
                                     $db = getDatabaseConnection();
                                     $user = User::getUser($db, $session->getId());
+                                    if ($user === null) {
+                                        // Handle missing user gracefully — e.g. redirect to login
+                                        header('Location: login.php');
+                                        exit();
+                                    }
                                     if ($user->profile_picture_id):
                                 ?>
                                     <img src="../Actions/images/originals/<?= htmlspecialchars((string)$user->profile_picture_id) ?>.jpg" alt="Profile Picture" />
@@ -284,6 +289,4 @@ function drawServiceFilterSidebar(PDO $db) {
   </script>
   <?php
 }
-?>
-
 ?>

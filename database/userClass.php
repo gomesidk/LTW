@@ -16,6 +16,7 @@ class User {
     public ?string $type_of_service;
     public ?float $rate;
     public ?string $description;
+    public string $user_type;
     public ?int $profile_picture_id;  // Added property
 
     public function __construct(
@@ -31,6 +32,7 @@ class User {
         string $address,
         ?float $rate,
         ?string $description,
+        string $user_type,
         ?int $profile_picture_id = null  // New constructor param with default
     )
     {
@@ -47,6 +49,7 @@ class User {
         $this->address = $address;
         $this->rate = $rate;
         $this->description = $description;
+        $this->user_type = $user_type;
         $this->profile_picture_id = $profile_picture_id;  // Assign new property
     }
 
@@ -57,7 +60,7 @@ class User {
     function save(PDO $db) {
         $stmt = $db->prepare('
             UPDATE User 
-            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, phone = ?, nr_bank_account = ?, address = ?, rate = ?, description = ?, profile_picture_id = ?
+            SET name = ?, email = ?, password = ?, created_at = ?, level = ?, birth_date = ?, phone = ?, nr_bank_account = ?, address = ?, rate = ?, description = ?, user_type = ?, profile_picture_id = ?
             WHERE id = ?
         ');
         $stmt->execute(array(
@@ -73,6 +76,7 @@ class User {
             $this->address,
             $this->rate,
             $this->description,
+            $this->user_type,
             $this->profile_picture_id,  // Added here
             $this->id
         ));
@@ -80,7 +84,7 @@ class User {
 
     static function getUserWithPassword(PDO $db, string $identifier, string $password) : ?User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, rate, description, profile_picture_id
+            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, rate, description, user_type, profile_picture_id
             FROM User
             WHERE (email = ? OR name = ? OR phone = ?)
               AND password = ?
@@ -104,6 +108,7 @@ class User {
                 $user['address'],
                 $user['rate'],
                 $user['description'],
+                $user['user_type'],
                 $user['profile_picture_id'] ?? null  // Pass profile_picture_id
             );
         } else {
@@ -111,14 +116,16 @@ class User {
         }
     }
     
-    static function getUser(PDO $db, int $id) : User {
+    static function getUser(PDO $db, int $id) : ?User {
         $stmt = $db->prepare('
-            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, rate, description, profile_picture_id
+            SELECT id, name, email, password, created_at, level, birth_date, phone, nr_bank_account, address, rate, description, user_type, profile_picture_id
             FROM User 
             WHERE id = ?
         ');
         $stmt->execute(array($id));
         $user = $stmt->fetch();
+
+        if (!$user) return null;
 
         return new User(
             $user['id'],
@@ -134,6 +141,7 @@ class User {
             $user['address'],
             $user['rate'],
             $user['description'],
+            $user['user_type'],
             $user['profile_picture_id'] ?? null  // Pass profile_picture_id
         );
     }
@@ -145,8 +153,8 @@ class User {
             INSERT INTO User (
                 name, email, password, created_at, level,
                 birth_date, phone, nr_bank_account, address,
-                rate, description, profile_picture_id
-            ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, NULL, NULL, NULL)
+                rate, description, user_type, profile_picture_id
+            ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, NULL, NULL, "user", NULL)
         ');
 
         $hashedPassword = sha1($password);
@@ -159,7 +167,7 @@ class User {
     static function get_Users_By_Service(PDO $db, int $service_id) : array {
         $stmt = $db->prepare('
             SELECT User.id, User.name, User.email, User.password, User.created_at, User.level, User.birth_date,
-                   User.phone, User.nr_bank_account, User.address, User.rate, User.description, User.profile_picture_id
+                   User.phone, User.nr_bank_account, User.address, User.rate, User.description, User.user_type, User.profile_picture_id
             FROM User
             JOIN Application ON Application.user_id = User.id
             WHERE Application.service_id = ?
@@ -182,6 +190,7 @@ class User {
                 $user['address'],
                 $user['rate'],
                 $user['description'],
+                $user['user_type'],
                 $user['profile_picture_id'] ?? null
             );
         }
@@ -212,6 +221,18 @@ class User {
         ');
         return $stmt->execute([$user_id]);
     }
+    // Promote a user to admin
+    static function promoteToAdmin(PDO $db, int $user_id): bool {
+        $stmt = $db->prepare('UPDATE User SET user_type = "admin" WHERE id = ?');
+        return $stmt->execute([$user_id]);
+    }
+
+    // Delete a user by ID
+    static function deleteUser(PDO $db, int $user_id): bool {
+        $stmt = $db->prepare('DELETE FROM User WHERE id = ?');
+        return $stmt->execute([$user_id]);
+    }
+
     
 }
 ?>
