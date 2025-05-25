@@ -169,27 +169,40 @@ function draw_user(User $user, Service $service) {
             <?php endif; ?>
             <h3><?= htmlspecialchars($user->email) ?></h3>
             <p><strong>Level:</strong> <?= number_format($user->level) ?></p>
-            <p><strong>Rate: </strong> $<?= number_format($user->rate, 2) ?>/hr</p>
+            <p><strong>Rate: </strong><?= number_format($user->rate / $user->level, 2) ?></p>
             <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($user->description)) ?></p>
         </div>
         <!-- Green Select Worker Button -->
-         <?php if ($service->worker_id): ?>
+         <?php if ($service->worker_id && $service->worker_id == $user->id): ?>
             <p style="color: green; font-weight: bold;">Worker Hired</p>
+            <div class="button-container" style="margin-top: 15px;">
+                <form action="../Actions/Action_Rate_User.php" method="POST">
+                    <!-- Pass the user's ID to the Action_Select_Worker.php script -->
+                    <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
+                    <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
+                    <label for="rating">Rating (1 to 5):</label>
+                    <input type="number" name="rating" id="rating" min="1" max="5" step="1" required style="margin-left: 10px; padding: 5px 10px; border-radius: 5px;">
+                    <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                        Rate User
+                    </button>
+                </form>
+            </div>
         <?php else: ?>
-        <div class="button-container" style="margin-top: 15px;">
-            <form action="../Actions/Action_Select_Worker.php" method="POST">
-                <!-- Pass the user's ID to the Action_Select_Worker.php script -->
-                <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
-                <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
-                <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                    Select Worker
-                </button>
-            </form>
-        </div>
+            <div class="button-container" style="margin-top: 15px;">
+                <form action="../Actions/Action_Select_Worker.php" method="POST">
+                    <!-- Pass the user's ID to the Action_Select_Worker.php script -->
+                    <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
+                    <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
+                    <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                        Select Worker
+                    </button>
+                </form>
+            </div>
         <?php endif; ?>
     </div>
     <?php
 }
+
 
 
 
