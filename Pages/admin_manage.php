@@ -35,96 +35,13 @@ $message = $_GET['msg'] ?? null;
 <head>
   <meta charset="UTF-8" />
   <title>Admin Management</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2rem;
-      background: #f9f9f9;
-      color: #333;
-    }
-
-    h1, h2 {
-      color: #222;
-    }
-
-    .message {
-      color: green;
-      font-weight: bold;
-      margin-bottom: 1rem;
-    }
-
-    button {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn { color: white; }
-
-    .promote-btn { background-color: #4CAF50; }
-    .promote-btn:hover { background-color: #45a049; }
-
-    .delete-btn { background-color: #f44336; }
-    .delete-btn:hover { background-color: #d32f2f; }
-
-    .edit-btn { background-color: #ff9800; }
-    .edit-btn:hover { background-color: #e68900; }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      background: white;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    }
-
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-    }
-
-    th {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    .form-section {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
-
-    .form-box, .category-box {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      flex: 1 1 400px;
-    }
-
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .category-actions form {
-      display: inline;
-    }
-  </style>
+  <link rel="stylesheet" href="../css/admin_manage.css">
 </head>
 <body>
 
 <h1>Admin Management</h1>
 
-<button onclick="window.location.href='profile.php'" style="background-color:#007BFF; color:white; margin-bottom:20px;">Go to Profile</button>
+<button onclick="window.location.href='profile.php'" class="go-profile-btn">Go to Profile</button>
 
 <?php if ($message): ?>
   <div class="message"><?= htmlspecialchars($message) ?></div>
@@ -143,16 +60,19 @@ $message = $_GET['msg'] ?? null;
         <td><?= htmlspecialchars($user['email']) ?></td>
         <td><?= htmlspecialchars($user['user_type']) ?></td>
         <td>
-          <?php if ($user['user_type'] !== 'admin'): ?>
-            <form method="POST" action="../Actions/Action_Admin_Manage.php">
-              <input type="hidden" name="promote_user_id" value="<?= (int)$user['id'] ?>" />
-              <button type="submit" class="btn promote-btn">Promote to Admin</button>
-            </form>
-          <?php endif; ?>
-          <form method="POST" action="../Actions/Action_Admin_Manage.php" onsubmit="return confirm('Delete this user?');">
-            <input type="hidden" name="delete_user_id" value="<?= (int)$user['id'] ?>" />
-            <button type="submit" class="btn delete-btn">Delete User</button>
+          <div class="admin-user-buttons">
+
+            <?php if ($user['user_type'] !== 'admin'): ?>
+              <form method="POST" action="../Actions/Action_Admin_Manage.php">
+                <input type="hidden" name="promote_user_id" value="<?= (int)$user['id'] ?>" />
+                <button type="submit" class="btn promote-btn">Promote to Admin</button>
+              </form>
+              <form method="POST" action="../Actions/Action_Admin_Manage.php" onsubmit="return confirm('Delete this user?');">
+                <input type="hidden" name="delete_user_id" value="<?= (int)$user['id'] ?>" />
+                <button type="submit" class="btn delete-btn">Delete User</button>
+                <?php endif; ?>
           </form>
+        </div>
         </td>
       </tr>
     <?php endforeach; ?>
