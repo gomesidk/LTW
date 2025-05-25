@@ -54,6 +54,7 @@ if ($service && $user) {
     
 
     User::rateUser($db, $user->id, $rating); 
+    Service::updateState($db, $service->id, "worker rated");
 
 
     echo "User rated";

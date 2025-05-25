@@ -202,18 +202,22 @@ function draw_user(User $user, Service $service) {
         <!-- Green Select Worker Button -->
          <?php if ($service->worker_id && $service->worker_id == $user->id): ?>
             <p style="color: green; font-weight: bold;">Worker Hired</p>
-            <div class="button-container" style="margin-top: 15px;">
-                <form action="../Actions/Action_Rate_User.php" method="POST">
-                    <!-- Pass the user's ID to the Action_Select_Worker.php script -->
-                    <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
-                    <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
-                    <label for="rating">Rating (1 to 5):</label>
-                    <input type="number" name="rating" id="rating" min="1" max="5" step="1" required style="margin-left: 10px; padding: 5px 10px; border-radius: 5px;">
-                    <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                        Rate User
-                    </button>
-                </form>
-            </div>
+            <?php if ($service->state == "worker rated"): ?>
+              <p style="color: green; font-weight: bold;">Worker already rated</p>
+            <?php else: ?>
+              <div class="button-container" style="margin-top: 15px;">
+                  <form action="../Actions/Action_Rate_User.php" method="POST">
+                      <!-- Pass the user's ID to the Action_Select_Worker.php script -->
+                      <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
+                      <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
+                      <label for="rating">Rating (1 to 5):</label>
+                      <input type="number" name="rating" id="rating" min="1" max="5" step="1" required style="margin-left: 10px; padding: 5px 10px; border-radius: 5px;">
+                      <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                          Rate User
+                      </button>
+                  </form>
+              </div>
+            <?php endif; ?>
         <?php else: ?>
             <div class="button-container" style="margin-top: 15px;">
                 <form action="../Actions/Action_Select_Worker.php" method="POST">

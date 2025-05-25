@@ -8,6 +8,7 @@ class Service {
     public float $price;
     public string $created_at;
     public int $number_applications;
+    public string $state;
     public string $category;
     public int $buyer_id;
     public ?int $worker_id; // Worker is optional, can be null if not assigned yet
@@ -24,6 +25,7 @@ class Service {
         $this->category = $category;
         $this->buyer_id = $buyer_id;
         $this->worker_id = $worker_id;
+        $this->state = 'hiring'; 
     }
 
     // Method to save or update a service in the database
@@ -32,7 +34,7 @@ class Service {
             // Update existing service
             $stmt = $db->prepare('
                 UPDATE Service 
-                SET name = ?, description = ?, price = ?, number_applications = ?, category = ?, buyer_id = ?, worker_id = ?
+                SET name = ?, description = ?, price = ?, number_applications = ?, category = ?, buyer_id = ?, worker_id = ?, state = ?
                 WHERE id = ?
             ');
             $stmt->execute(array(
@@ -43,13 +45,14 @@ class Service {
                 $this->category, 
                 $this->buyer_id, 
                 $this->worker_id,
-                $this->id
+                $this->id,
+                $this->state
             ));
         } else {
             // Insert new service
             $stmt = $db->prepare('
-                INSERT INTO Service (name, description, price, created_at, number_applications, category, buyer_id, worker_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO Service (name, description, price, created_at, number_applications, category, buyer_id, worker_id, state)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ');
             $created_at = date('Y-m-d H:i:s');
             $stmt->execute(array(
@@ -60,7 +63,8 @@ class Service {
                 $this->number_applications, 
                 $this->category, 
                 $this->buyer_id, 
-                $this->worker_id
+                $this->worker_id,
+                $this->state
             ));
         }
     }
@@ -97,7 +101,7 @@ class Service {
     // Static method to retrieve a service by ID
     static function getService(PDO $db, int $id) : Service {
         $stmt = $db->prepare('
-            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id
+            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id, state
             FROM Service
             WHERE id = ?
         ');
@@ -113,7 +117,8 @@ class Service {
             $service['number_applications'],
             $service['category'],
             $service['buyer_id'],
-            $service['worker_id']
+            $service['worker_id'],
+            $service['state']
         );
     }
 
@@ -193,7 +198,8 @@ class Service {
                 $service['number_applications'],
                 $service['category'],
                 $service['buyer_id'],
-                $service['worker_id']
+                $service['worker_id'],
+                $service['state']
             );
         }
 
@@ -227,25 +233,34 @@ class Service {
     }
 
     public static function searchServices(PDO $db, string $query): array {
-    $stmt = $db->prepare('
-        SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id
-        FROM Service
-        WHERE name LIKE ? OR description LIKE ?
-    ');
-    $likeQuery = '%' . $query . '%';
-    $stmt->execute([$likeQuery, $likeQuery]);
+        $stmt = $db->prepare('
+            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id
+            FROM Service
+            WHERE name LIKE ? OR description LIKE ?
+        ');
+        $likeQuery = '%' . $query . '%';
+        $stmt->execute([$likeQuery, $likeQuery]);
 
-    $services = [];
-    while ($row = $stmt->fetch()) {
-        $services[] = new Service(
-            $row['id'], $row['name'], $row['description'],
-            $row['price'], $row['created_at'],
-            $row['number_applications'], $row['category'],
-            $row['buyer_id'], $row['worker_id']
-        );
+        $services = [];
+        while ($row = $stmt->fetch()) {
+            $services[] = new Service(
+                $row['id'], $row['name'], $row['description'],
+                $row['price'], $row['created_at'],
+                $row['number_applications'], $row['category'],
+                $row['buyer_id'], $row['worker_id']
+            );
+        }
+        return $services;
     }
-    return $services;
-}
+
+    public static function updateState(PDO $db, int $service_id, string $state) {
+        $stmt = $db->prepare('
+            UPDATE Service 
+            SET state = ?
+            WHERE id = ?
+        ');
+        $stmt->execute(array($state, $service_id));
+    }
 
     
 }
