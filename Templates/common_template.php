@@ -60,7 +60,7 @@ function drawHeader(Session $session) {
 </script>
     <body>
         <header class="navbar">
-            <a href="index.html" class="logo">SkillFlow</a>
+            <a href="index.php" class="logo">SkillFlow</a>
             <div class="bar">
                 <nav class="menu">
                     <a href="index.php">Home</a>
