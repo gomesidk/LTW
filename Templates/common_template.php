@@ -253,7 +253,7 @@ function draw_user(User $user, Service $service) {
         <!-- Green Select Worker Button -->
         <?php if ($service->worker_id && $service->worker_id == $user->id): ?>
             <p style="color: green;">Worker Hired</p>
-            <?php if ($service->state == "worker rated"): ?>
+            <?php if ($service->state == 'Worker rated'): ?>
                 <p style="color: green;">Worker already rated</p>
             <?php else: ?>
                 <div class="button-container">

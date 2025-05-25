@@ -14,7 +14,7 @@ class User {
     public string $nr_bank_account;
     public string $address;
     public ?string $type_of_service;
-    public ?float $rate;
+    public int $rate;
     public ?string $description;
     public string $user_type;
     public ?int $profile_picture_id;  // Added property
@@ -30,7 +30,7 @@ class User {
         string $phone,
         string $nr_bank_account,
         string $address,
-        ?float $rate,
+        int $rate = 0,
         ?string $description,
         string $user_type,
         ?int $profile_picture_id = null  // New constructor param with default
@@ -154,7 +154,7 @@ class User {
                 name, email, password, created_at, level,
                 birth_date, phone, nr_bank_account, address,
                 rate, description, user_type, profile_picture_id
-            ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, NULL, NULL, "user", NULL)
+            ) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?, 0, NULL, "user", NULL)
         ');
 
         $hashedPassword = sha1($password);
@@ -213,7 +213,6 @@ class User {
     }
 
     static function upgradeUser(PDO $db, int $user_id): bool {
-        // Upgrade user level to 2
         $stmt = $db->prepare('
             UPDATE User 
             SET level = level + 1

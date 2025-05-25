@@ -40,7 +40,8 @@ if (isset($_POST['jobTitle'], $_POST['jobDescription'], $_POST['budget'], $_POST
         0,              // number_applications inicial
         $category,
         $buyer_id,
-        null            // worker_id vazio
+        null, 
+        "Hiring"          // worker_id vazio
     );
 
     try {

@@ -52,7 +52,7 @@ if ($service && $user) {
     // Assign the worker to the service
     Service::setworker($db, $service->id, $user->id);
     User::upgradeUser($db, $user->id);
-    Service::updateState($db, $service->id, "worker hired");
+    Service::updateState($db, $service->id, "Worker hired");
 
     // Debugging: Confirm action has been performed
     echo "Worker (User ID: {$user->id}) successfully assigned to Service (Job ID: {$service->id}).<br>";
