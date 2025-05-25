@@ -28,35 +28,6 @@ function drawHeader(Session $session) {
       dropdown.style.display = "none";
     }
   });
-
-  function handleSearch() {
-    const query = document.getElementById("searchInput").value.trim();
-    if (query === "") return;
-
-    const currentPage = window.location.pathname.split("/").pop();
-
-    if (currentPage === "jobs.php") {
-        // Reload current page with search param
-        window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
-    } else {
-        // Redirect to jobs.php with query
-        window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
-    }
-
-}
-  function handleSearchKeyPress(event) {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById("searchInput");
-    searchInput.addEventListener('keypress', handleSearchKeyPress);
-  });
-
-
-  
 </script>
     <body>
         <header class="navbar">
@@ -68,11 +39,11 @@ function drawHeader(Session $session) {
                     <a href="newjobs.php">New</a>
                     <a href="about.php">About</a>
                     <div class="search-bar">
-                      <input type="text" placeholder="Search..." class="search-input" id="searchInput">
-                      <button type="button" class="search-button" onclick="handleSearch()">
-                          <img src="../assets/icons/search.png" alt="Search">
-                      </button>
-                  </div>
+                        <input type="text" placeholder="Search..." class="search-input">
+                        <button type="submit" class="search-button">
+                            <img src="../assets/icons/search.png" alt="Search">
+                        </button>
+                    </div>
                 </nav>
                 <div class="auth-buttons" id="authButtons">
                     <?php if ($session->isLoggedIn()): ?>
@@ -198,23 +169,35 @@ function draw_user(User $user, Service $service) {
             <?php endif; ?>
             <h3><?= htmlspecialchars($user->email) ?></h3>
             <p><strong>Level:</strong> <?= number_format($user->level) ?></p>
-            <p><strong>Rate: </strong> $<?= number_format($user->rate, 2) ?>/hr</p>
+            <p><strong>Rate: </strong><?= number_format($user->rate / $user->level, 2) ?></p>
             <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($user->description)) ?></p>
         </div>
         <!-- Green Select Worker Button -->
-         <?php if ($service->worker_id): ?>
+         <?php if ($service->worker_id && $service->worker_id == $user->id): ?>
             <p style="color: green; font-weight: bold;">Worker Hired</p>
+            <div class="button-container" style="margin-top: 15px;">
+                <form action="../Actions/Action_Rate_User.php" method="POST">
+                    <!-- Pass the user's ID to the Action_Select_Worker.php script -->
+                    <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
+                    <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
+                    <label for="rating">Rating (1 to 5):</label>
+                    <input type="number" name="rating" id="rating" min="1" max="5" step="1" required style="margin-left: 10px; padding: 5px 10px; border-radius: 5px;">
+                    <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                        Rate User
+                    </button>
+                </form>
+            </div>
         <?php else: ?>
-        <div class="button-container" style="margin-top: 15px;">
-            <form action="../Actions/Action_Select_Worker.php" method="POST">
-                <!-- Pass the user's ID to the Action_Select_Worker.php script -->
-                <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
-                <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
-                <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                    Select Worker
-                </button>
-            </form>
-        </div>
+            <div class="button-container" style="margin-top: 15px;">
+                <form action="../Actions/Action_Select_Worker.php" method="POST">
+                    <!-- Pass the user's ID to the Action_Select_Worker.php script -->
+                    <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
+                    <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
+                    <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                        Select Worker
+                    </button>
+                </form>
+            </div>
         <?php endif; ?>
     </div>
     <?php
@@ -222,58 +205,5 @@ function draw_user(User $user, Service $service) {
 
 
 
+
 ?>
-
-
-<?php
-function drawServiceFilterSidebar(PDO $db) {
-  // Fetch categories dynamically from DB if you want, otherwise hardcode as below
-  $categories = $db->query('SELECT name FROM Category')->fetchAll(PDO::FETCH_COLUMN);
-  ?>
-  <div>
-    <h3>Filter Services</h3>
-
-    <div style="margin-bottom: 15px;">
-      <label for="filter-category" style="display: block; font-weight: bold;">Category:</label>
-      <select id="filter-category" style="width: 100%; padding: 5px;">
-        <option value="">All</option>
-        <?php foreach ($categories as $category): ?>
-          <option value="<?= htmlspecialchars($category) ?>"><?= htmlspecialchars($category) ?></option>
-        <?php endforeach; ?>
-      </select>
-    </div>
-
-    <div style="margin-bottom: 15px;">
-      <label for="filter-min-price" style="display: block; font-weight: bold;">Minimum Price:</label>
-      <input type="number" id="filter-min-price" style="width: 100%; padding: 5px;" placeholder="e.g. 20" min="0" />
-    </div>
-
-    <button id="apply-filters" style="width: 100%; padding: 10px; background-color: #14a800; color: white; border: none; border-radius: 5px;">
-      Apply Filters
-    </button>
-  </div>
-
-  <script>
-    document.getElementById('apply-filters').addEventListener('click', function() {
-      const category = document.getElementById('filter-category').value;
-      const minPrice = document.getElementById('filter-min-price').value;
-
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '../Actions/Action_Filter_Service.php', true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          document.querySelector('.services-container').innerHTML = xhr.responseText;
-        } else {
-          alert('Error loading filtered services.');
-        }
-      };
-
-      xhr.send(`category=${encodeURIComponent(category)}&min_price=${encodeURIComponent(minPrice)}`);
-    });
-  </script>
-  <?php
-}
-?>
-

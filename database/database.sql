@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS "User" (
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     created_at TEXT,
-    level INTEGER NOT NULL DEFAULT 1,
+    level INTEGER NOT NULL DEFAULT 0,
     birth_date TEXT NOT NULL,
     profile_picture_id INTEGER,
     phone TEXT NOT NULL,

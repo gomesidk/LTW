@@ -188,6 +188,30 @@ class User {
     
         return $userObjects;
     }
+
+    static function rateUser(PDO $db, int $user_id, int $rating) : bool {
+        // Ensure rating is between 0 and 5
+        if ($rating < 0 || $rating > 5) {
+            return false; // Invalid rating
+        }
+
+        $stmt = $db->prepare('
+            UPDATE User 
+            SET rate = rate + ?
+            WHERE id = ?
+        ');
+        return $stmt->execute([$rating, $user_id]);
+    }
+
+    static function upgradeUser(PDO $db, int $user_id): bool {
+        // Upgrade user level to 2
+        $stmt = $db->prepare('
+            UPDATE User 
+            SET level = level + 1
+            WHERE id = ?
+        ');
+        return $stmt->execute([$user_id]);
+    }
     
 }
 ?>
