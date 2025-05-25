@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="../css/newjobs.css" />
   <link rel="stylesheet" href="../css/navbar.css" />
   <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/user_card.css" />
 </head>
 <body>
   <main class="new-job-container">
@@ -57,7 +58,7 @@
         <!-- Hidden input to identify job id, if needed -->
         <!-- <input type="hidden" name="jobId" value="<?= $jobId ?>" /> -->
 
-        <section class="applied-users-container">
+        <section class="users-wrapper">
   <?php if ($service->worker_id): ?>
     <?php
       $worker = User::getUser($db, $service->worker_id);

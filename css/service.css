@@ -10,7 +10,9 @@
   text-decoration: none;
   color: inherit;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
+  box-sizing: border-box;
 }
+
 .service-card2:hover {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
@@ -34,11 +36,15 @@
 }
 
 .service-card2__meta {
-  display: flex;
-  justify-content: space-between;
+  display: block;
   font-size: 0.85rem;
   color: #777;
   margin-bottom: 1rem;
+}
+
+.service-card2__meta span {
+  display: block;
+  margin-bottom: 0.3rem; /* small space between */
 }
 
 .service-card2__desc {
@@ -66,15 +72,31 @@
 .services-container {
   display: flex;
   flex-wrap: wrap;
-   /* center rows */
+  /* center rows */
   gap: 20px;
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+/* 3 cards per row on desktop */
 .service-card2 {
-  flex: 0 1 calc(33.33% - 40px); /* 3 cards per row with gap accounted for */
-  box-sizing: border-box;
+  flex: 0 1 calc(33.33% - 40px);
   margin: 10px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .service-card2 {
+    flex: 0 1 calc(50% - 30px); /* 2 cards per row */
+    max-width: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .service-card2 {
+    flex: 0 1 100%; /* 1 card per row */
+    max-width: none;
+    margin: 10px 0;
+  }
 }

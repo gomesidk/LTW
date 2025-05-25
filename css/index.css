@@ -233,3 +233,80 @@ button {
     z-index: 10;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  /* Container Layout */
+  .container {
+    flex-direction: column;
+  }
+
+  .image-section, .text-section {
+    width: 100%;
+    margin: 0;
+  }
+
+  .image-section img {
+    border-radius: 12px 12px 0 0;
+  }
+
+  .text-section {
+    padding: 16px;
+    border-radius: 0 0 12px 12px;
+  }
+
+  /* Performer Cards Resize */
+  .performer-card {
+    flex: 0 0 25%;
+  }
+
+  /* Grid Adjustments */
+  .categories-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Performer Cards Resize */
+  .performer-card {
+    flex: 0 0 35%;
+  }
+
+  /* Grid Adjustments */
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .scroll-button-left-top,
+  .scroll-button-right-top {
+    width: 26px;
+    height: 26px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-section p,
+  .text-section button {
+    font-size: 14px;
+  }
+
+  .text-section h1 {
+    font-size: 20px;
+  }
+
+  .category-card {
+    padding: 16px;
+    height: auto;
+  }
+
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .performer-card {
+    flex: 0 0 70%;
+    margin-right: 12px;
+  }
+}

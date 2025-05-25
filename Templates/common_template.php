@@ -6,109 +6,155 @@ function drawHeader(Session $session) {
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>SkillFlow</title>
-        <link rel="stylesheet" href="../css/navbar.css">
-        <link rel="stylesheet" href="../css/jobs.css">
-        <link rel="stylesheet" href="../css/footer.css">
-        <link rel="stylesheet" href="../css/service.css">
+        <link rel="stylesheet" href="../css/navbar.css" />
+        <link rel="stylesheet" href="../css/jobs.css" />
+        <link rel="stylesheet" href="../css/footer.css" />
+        <link rel="stylesheet" href="../css/service.css" />
     </head>
     <script>
-  function toggleDropdown() {
-    const dropdown = document.getElementById("profileDropdown");
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-  }
+        function toggleDropdown() {
+            const dropdown = document.getElementById("profileDropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
 
-  // Optional: hide dropdown if user clicks outside
-  window.addEventListener('click', function (e) {
-    const profile = document.getElementById("profileCircle");
-    const dropdown = document.getElementById("profileDropdown");
-    if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
-      dropdown.style.display = "none";
-    }
-  });
+        window.addEventListener('click', function (e) {
+            const profile = document.getElementById("profileCircle");
+            const dropdown = document.getElementById("profileDropdown");
+            if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = "none";
+            }
+        });
 
-  function handleSearch() {
-    const query = document.getElementById("searchInput").value.trim();
-    if (query === "") return;
+        function handleSearch() {
+            const query = document.getElementById("searchInput").value.trim();
+            if (query === "") return;
 
-    const currentPage = window.location.pathname.split("/").pop();
+            const currentPage = window.location.pathname.split("/").pop();
 
-    if (currentPage === "jobs.php") {
-        // Reload current page with search param
-        window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
-    } else {
-        // Redirect to jobs.php with query
-        window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
-    }
+            if (currentPage === "jobs.php") {
+                window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
+            } else {
+                window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
+            }
+        }
 
-}
-  function handleSearchKeyPress(event) {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  }
+        function handleSearchKeyPress(event) {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById("searchInput");
-    searchInput.addEventListener('keypress', handleSearchKeyPress);
-  });
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById("searchInput");
+            searchInput.addEventListener('keypress', handleSearchKeyPress);
+        });
 
-
-  
-</script>
+        function toggleMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('show');
+        }
+    </script>
     <body>
         <header class="navbar">
-            <a href="index.php" class="logo">SkillFlow</a>
-            <div class="bar">
+            <div class="logo">
+                <a href="index.php" class="logo">SkillFlow</a>
+            </div>
+
+            <div class="nav-right">
                 <nav class="menu">
                     <a href="index.php">Home</a>
                     <a href="jobs.php">Jobs</a>
                     <a href="newjobs.php">New</a>
                     <a href="about.php">About</a>
+
                     <div class="search-bar">
-                      <input type="text" placeholder="Search..." class="search-input" id="searchInput">
-                      <button type="button" class="search-button" onclick="handleSearch()">
-                          <img src="../assets/icons/search.png" alt="Search">
-                      </button>
-                  </div>
+                        <input type="text" placeholder="Search..." class="search-input" id="searchInput" />
+                        <button type="button" class="search-button" onclick="handleSearch()">
+                            <img src="../assets/icons/search.png" alt="Search" />
+                        </button>
+                    </div>
                 </nav>
+
                 <div class="auth-buttons" id="authButtons">
                     <?php if ($session->isLoggedIn()): ?>
                     <div class="profile-dropdown-container">
                         <div id="profileCircle" class="profile-circle" onclick="toggleDropdown()">
-                                <?php
-                                    require_once(__DIR__ . '/../database/connection.php');
-                                    require_once(__DIR__ . '/../database/userClass.php');
-                                    $db = getDatabaseConnection();
-                                    $user = User::getUser($db, $session->getId());
-                                    if ($user === null) {
-                                        // Handle missing user gracefully — e.g. redirect to login
-                                        header('Location: login.php');
-                                        exit();
-                                    }
-                                    if ($user->profile_picture_id):
-                                ?>
-                                    <img src="../Actions/images/originals/<?= htmlspecialchars((string)$user->profile_picture_id) ?>.jpg" alt="Profile Picture" />
-                                <?php else: ?>
-                                    <img src="../assets/icons/user.png" alt="Profile" />
-                                <?php endif; ?>
+                            <?php
+                                require_once(__DIR__ . '/../database/connection.php');
+                                require_once(__DIR__ . '/../database/userClass.php');
+                                $db = getDatabaseConnection();
+                                $user = User::getUser($db, $session->getId());
+                                if ($user === null) {
+                                    header('Location: login.php');
+                                    exit();
+                                }
+                                if ($user->profile_picture_id):
+                            ?>
+                            <img src="../Actions/images/originals/<?= htmlspecialchars((string)$user->profile_picture_id) ?>.jpg" alt="Profile Picture" />
+                            <?php else: ?>
+                            <img src="../assets/icons/user.png" alt="Profile" />
+                            <?php endif; ?>
                         </div>
                         <div id="profileDropdown" class="dropdown-menu" style="display: none;">
-                        <a href="profile.php">Go to Profile</a>
-                        <a href="../Actions/Action_Logout.php">Logout</a>
+                            <a href="profile.php">Go to Profile</a>
+                            <a href="../Actions/Action_Logout.php">Logout</a>
                         </div>
                     </div>
                     <?php else: ?>
-                        <button class="login" id="loginButton" onclick="window.location.href='login.php'">Log in</button>
-                        <button class="signup" id="signupButton" onclick="window.location.href='register.php'">Sign up</button>
+                    <button class="login" id="loginButton" onclick="window.location.href='login.php'">Log in</button>
+                    <button class="signup" id="signupButton" onclick="window.location.href='register.php'">Sign up</button>
                     <?php endif; ?>
+                </div>
+
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
         </header>
+
+        <!-- Mobile menu shown on hamburger toggle -->
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="index.php">Home</a>
+            <a href="jobs.php">Jobs</a>
+            <a href="newjobs.php">New</a>
+            <a href="about.php">About</a>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Search..." class="search-input" id="searchInputMobile" />
+                <button type="button" class="search-button" onclick="handleSearchMobile()">
+                    <img src="../assets/icons/search.png" alt="Search" />
+                </button>
+            </div>
+        </div>
+
+        <script>
+            // Mobile search input & button logic (separate because of separate input IDs)
+            function handleSearchMobile() {
+                const query = document.getElementById("searchInputMobile").value.trim();
+                if (query === "") return;
+
+                window.location.href = `jobs.php?query=${encodeURIComponent(query)}`;
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInputMobile = document.getElementById("searchInputMobile");
+                searchInputMobile.addEventListener('keypress', function(event) {
+                    if(event.key === 'Enter') {
+                        handleSearchMobile();
+                    }
+                });
+            });
+        </script>
     <?php
 }
+
+
+
 
 function drawFooter() {
     ?>
@@ -192,44 +238,42 @@ function draw_service(Service $service, User $user) {
 
 function draw_user(User $user, Service $service) {
     ?>
-    <div class="user-card-container" style="margin-bottom: 20px; border: 2px solid #ccc; padding: 20px; width: 300px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <div class="user-card-container">
         <div class="user-card">
             <?php if (!is_null($user->profile_picture_id)): ?>
-                <img src="../Actions/images/originals/<?= htmlspecialchars((string)$user->profile_picture_id) ?>.jpg" alt="User Avatar" class="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-bottom: 15px;">
+                <img src="../Actions/images/originals/<?= htmlspecialchars((string)$user->profile_picture_id) ?>.jpg" alt="User Avatar" class="user-avatar">
             <?php else: ?>
-                <img src="../assets/icons/user.png" alt="User Avatar" class="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-bottom: 15px;">
+                <img src="../assets/icons/user.png" alt="User Avatar" class="user-avatar">
             <?php endif; ?>
             <h3><?= htmlspecialchars($user->email) ?></h3>
             <p><strong>Level:</strong> <?= number_format($user->level) ?></p>
-            <p><strong>Rate: </strong><?= number_format($user->rate / $user->level, 2) ?></p>
+            <p><strong>Rate:</strong> <?= number_format($user->rate / $user->level, 2) ?></p>
             <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($user->description)) ?></p>
         </div>
         <!-- Green Select Worker Button -->
-         <?php if ($service->worker_id && $service->worker_id == $user->id): ?>
-            <p style="color: green; font-weight: bold;">Worker Hired</p>
+        <?php if ($service->worker_id && $service->worker_id == $user->id): ?>
+            <p style="color: green;">Worker Hired</p>
             <?php if ($service->state == "worker rated"): ?>
-              <p style="color: green; font-weight: bold;">Worker already rated</p>
+                <p style="color: green;">Worker already rated</p>
             <?php else: ?>
-              <div class="button-container" style="margin-top: 15px;">
-                  <form action="../Actions/Action_Rate_User.php" method="POST">
-                      <!-- Pass the user's ID to the Action_Select_Worker.php script -->
-                      <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
-                      <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
-                      <label for="rating">Rating (1 to 5):</label>
-                      <input type="number" name="rating" id="rating" min="1" max="5" step="1" required style="margin-left: 10px; padding: 5px 10px; border-radius: 5px;">
-                      <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                          Rate User
-                      </button>
-                  </form>
-              </div>
+                <div class="button-container">
+                    <form action="../Actions/Action_Rate_User.php" method="POST">
+                        <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
+                        <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
+                        <label for="rating">Rating (1 to 5):</label>
+                        <input type="number" name="rating" id="rating" min="1" max="5" step="1" required>
+                        <button class="select-worker-btn" type="submit">
+                            Rate User
+                        </button>
+                    </form>
+                </div>
             <?php endif; ?>
         <?php else: ?>
-            <div class="button-container" style="margin-top: 15px;">
+            <div class="button-container">
                 <form action="../Actions/Action_Select_Worker.php" method="POST">
-                    <!-- Pass the user's ID to the Action_Select_Worker.php script -->
                     <input type="hidden" name="userId" value="<?= htmlspecialchars($user->id) ?>" />
                     <input type="hidden" name="jobId" value="<?= htmlspecialchars($service->id) ?>" />
-                    <button class="select-worker-btn" type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                    <button class="select-worker-btn" type="submit">
                         Select Worker
                     </button>
                 </form>
