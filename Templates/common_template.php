@@ -68,6 +68,7 @@ function drawHeader(Session $session) {
                     <a href="index.php">Home</a>
                     <a href="jobs.php">Jobs</a>
                     <a href="newjobs.php">New</a>
+                    <a href="conversations.php">Messages</a>
                     <a href="about.php">About</a>
 
                     <div class="search-bar">
@@ -122,6 +123,7 @@ function drawHeader(Session $session) {
             <a href="index.php">Home</a>
             <a href="jobs.php">Jobs</a>
             <a href="newjobs.php">New</a>
+            <a href="conversations.php">Messages</a>
             <a href="about.php">About</a>
 
             <div class="search-bar">
@@ -250,6 +252,15 @@ function draw_user(User $user, Service $service) {
             <p><strong>Rate:</strong> <?= number_format($user->rate / $user->level, 2) ?></p>
             <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($user->description)) ?></p>
         </div>
+        <div class="button-container">
+            <form action="../Pages/chat.php" method="GET">
+                <input type="hidden" name="with" value="<?= htmlspecialchars($user->id) ?>" />
+                <button class="chat-user-btn" type="submit">
+                    Chat with this user
+                </button>
+            </form>
+        </div>
+
         <!-- Green Select Worker Button -->
         <?php if ($service->worker_id && $service->worker_id == $user->id): ?>
             <p style="color: green;">Worker Hired</p>
