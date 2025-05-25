@@ -16,6 +16,7 @@
   $jobId = $_GET['jobId'] ?? null;
   
   $service = Service::getService($db, $jobId);
+  $state = $service->state;
   $applied_users = User::get_Users_By_Service($db, $jobId);
 
   // You could also fetch the job info by ID from DB here instead of GET params
@@ -52,6 +53,9 @@
 
         <label for="budget">Budget</label>
         <input type="text" id="budget" name="budget" value="<?= htmlspecialchars($budget) ?>" readonly />
+
+        <label for="state">State</label>
+        <input type="text" id="budget" name="state" value="<?= htmlspecialchars($state) ?>" readonly />
 
         <input type="hidden" name="jobId" value="<?= htmlspecialchars($_GET['jobId'] ?? '') ?>">
 

@@ -12,8 +12,8 @@ if (!$session->isLoggedIn()) {
     exit;
 }
 
-if (!isset($_POST['userId'], $_POST['jobId'])) {
-    die('Missing userId or jobId!');
+if (!isset($_POST['userId'], $_POST['jobId'], $_POST['rating'])) {
+    die('Missing userId, jobId, or rating!');
 }
 
 require_once(__DIR__ . '/../database/connection.php');
@@ -28,11 +28,13 @@ $userid = (int)$_POST['userId'];
 // Get the service ID from the form submission (POST)
 $serviceID = (int)$_POST['jobId'];
 
-$rating = (int)$_POST['rating'] ?? 0; // Default to 0 if not set
+$rating = (int)$_POST['rating']; // Make sure rating is properly cast
 
 // Debugging: Check if the user and service IDs are correct
 echo "User ID: " . $userid . "<br>";
-echo "Service ID: " . $serviceID . "<br>";
+echo "S25 22:48:36 2025] 127.0.0.1:52784 Closing
+ervice ID: " . $serviceID . "<br>";
+echo "Rating: " . $rating . "<br>";
 
 $user = User::getUser($db, $userid);
 $service = Service::getService($db, $serviceID);
@@ -51,18 +53,15 @@ if ($service) {
 }
 
 if ($service && $user) {
-    
-
+    // Call the rateUser method to update the rate
     User::rateUser($db, $user->id, $rating); 
-    Service::updateState($db, $service->id, "worker rated");
+    Service::updateState($db, $serviceID, "Worker rated");
 
-
-    echo "User rated";
+    echo "User rated successfully.<br>";
 
     // Add a success message and redirect
     $session->addMessage('success', 'Worker rated');
 } else {
-    // Debugging: Check if the issue is with missing user or service
     echo "Error: User or Service not found.<br>";
     $session->addMessage('error', 'User or Service not found!');
 }

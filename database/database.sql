@@ -57,12 +57,12 @@ CREATE TABLE IF NOT EXISTS "User" (
     phone TEXT NOT NULL,
     nr_bank_account TEXT NOT NULL,
     address TEXT NOT NULL,
-    rate INTEGER DEFAULT 0, 
+    rate INTEGER DEFAULT 0 NOT NULL, 
     description TEXT DEFAULT '',
     user_type TEXT NOT NULL DEFAULT 'user',
     FOREIGN KEY (profile_picture_id) REFERENCES Images(id)
         ON DELETE SET NULL
-    );
+);
 
 CREATE TABLE IF NOT EXISTS "Application" (
     service_id INTEGER NOT NULL,

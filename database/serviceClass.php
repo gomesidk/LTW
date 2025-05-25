@@ -8,13 +8,13 @@ class Service {
     public float $price;
     public string $created_at;
     public int $number_applications;
-    public string $state;
+    public string $state = "Hiring";
     public string $category;
     public int $buyer_id;
     public ?int $worker_id; // Worker is optional, can be null if not assigned yet
 
     // Constructor to initialize the service object
-    public function __construct(int $id, string $name, string $description, float $price, string $created_at, int $number_applications, string $category, int $buyer_id, ?int $worker_id)
+    public function __construct(int $id, string $name, string $description, float $price, string $created_at, int $number_applications, string $category, int $buyer_id, ?int $worker_id, string $state)
     {
         $this->id = $id;
         $this->name = $name;
@@ -25,10 +25,10 @@ class Service {
         $this->category = $category;
         $this->buyer_id = $buyer_id;
         $this->worker_id = $worker_id;
-        $this->state = 'hiring'; 
+        $this->state = $state; 
     }
 
-    // Method to save or update a service in the database
+  // Method to save or update a service in the database
     function save(PDO $db) {
         if ($this->id) {
             // Update existing service
@@ -125,7 +125,7 @@ class Service {
     // Static method to retrieve all services for a specific buyer
     static function getServicesByBuyer(PDO $db, int $buyer_id) : array {
         $stmt = $db->prepare('
-            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id
+            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id, state
             FROM Service
             WHERE buyer_id = ?
         ');
@@ -143,7 +143,8 @@ class Service {
                 $service['number_applications'],
                 $service['category'],
                 $service['buyer_id'],
-                $service['worker_id']
+                $service['worker_id'], 
+                $service['state']
             );
         }
 
@@ -153,7 +154,7 @@ class Service {
     // Static method to retrieve all services in a specific category
     static function getServicesByCategory(PDO $db, string $category) : array {
         $stmt = $db->prepare('
-            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id
+            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id, state
             FROM Service
             WHERE category = ?
         ');
@@ -171,7 +172,8 @@ class Service {
                 $service['number_applications'],
                 $service['category'],
                 $service['buyer_id'],
-                $service['worker_id']
+                $service['worker_id'],
+                $service['state']
             );
         }
 
@@ -181,7 +183,7 @@ class Service {
     // Static method to retrieve all services in a specific category
     static function getServices(PDO $db) : array {
         $stmt = $db->prepare('
-            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id
+            SELECT id, name, description, price, created_at, number_applications, category, buyer_id, worker_id, state
             FROM Service
         ');
         $stmt->execute(array());
