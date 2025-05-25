@@ -21,7 +21,10 @@ drawHeader($session);  // imprime <html>, <head>, <body>, header
 
 <div class="services-container">
   <?php foreach ($services as $service): ?>
-    <?php draw_service($service, $user); ?>
+    <?php
+    $buyer = User::getUser($db, $service->buyer_id);
+    ?>
+    <?php draw_service($service, $buyer); ?>
   <?php endforeach; ?>
 </div>
 

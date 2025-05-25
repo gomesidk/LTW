@@ -12,10 +12,11 @@ $user = User::getUser($db, $session->getId());
 
 $searchQuery = isset($_GET['query']) ? trim($_GET['query']) : '';
 if (!empty($searchQuery)) {
-    $services = Service::searchServices($db, $searchQuery);
+  $services = Service::searchServices($db, $searchQuery);
 } else {
-    $services = Service::getServices($db);
+  $services = Service::getServices($db);
 }
+
 
 
 
@@ -30,7 +31,8 @@ drawHeader($session);  // imprime <html>, <head>, <body>, header
   <div class="services-container">
     <?php
       foreach ($services as $service) {
-        draw_service($service, $user);
+        $buyer = User::getUser($db, $service->buyer_id);
+        draw_service($service, $buyer);
       }
     ?>
   </div>

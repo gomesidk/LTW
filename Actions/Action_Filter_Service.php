@@ -1,7 +1,9 @@
 <?php
 require_once(__DIR__ . '/../database/connection.php');
 require_once(__DIR__ . '/../database/serviceClass.php');
+require_once(__DIR__ . '/../database/userClass.php'); // Assuming you have this for User class
 require_once(__DIR__ . '/../Utils/Session.php');
+require_once(__DIR__ . '/../Templates/common_template.php'); // Adjust path where draw_service() is defined
 
 header('Content-Type: text/html; charset=utf-8');
 
@@ -31,23 +33,27 @@ if ($min_price > 0) {
 $stmt = $db->prepare($query);
 $stmt->execute($params);
 
-$services = $stmt->fetchAll();
+$serviceRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-function renderServiceCard(array $service): string {
-    // You can adapt this function to your draw_service() HTML structure
-    return '
-    <div class="service-card2">
-      <div class="service-card2__header">
-        <h3 class="service-card2__title">' . htmlspecialchars($service['name']) . '</h3>
-        <div class="service-card2__price">$' . number_format($service['price'], 2) . '</div>
-      </div>
-      <div class="service-card2__meta">
-        <span class="service-card2__category">' . htmlspecialchars($service['category']) . '</span>
-      </div>
-      <p class="service-card2__desc">' . htmlspecialchars($service['description']) . '</p>
-    </div>';
-}
+// For each result row, create a Service object and get the User object of the buyer
+foreach ($serviceRows as $row) {
+    $service = new Service(
+        (int)$row['id'],
+        $row['name'],
+        $row['description'],
+        (float)$row['price'],
+        $row['created_at'],
+        (int)$row['number_applications'],
+        $row['category'],
+        (int)$row['buyer_id'],
+        isset($row['worker_id']) ? (int)$row['worker_id'] : null,
+        $row['state']
+    );
 
-foreach ($services as $service) {
-    echo renderServiceCard($service);
+    // Get buyer User object by buyer_id - you need to implement this or adjust accordingly
+    $buyer = User::getUser($db, $service->buyer_id);
+
+    // Call your draw_service() function to render each service
+    draw_service($service, $buyer);
 }
+?>
