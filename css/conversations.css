@@ -1,0 +1,53 @@
+.conversations-wrapper {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.conversation-list {
+    list-style: none;
+    padding: 0;
+}
+
+.conversation-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.conversation-card:hover {
+    background: #e6f0ff;
+}
+
+.conversation-profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.conversation-content {
+    flex: 1;
+}
+
+.conversation-content h3 {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.conversation-content p {
+    margin: 5px 0;
+    color: #333;
+}
+
+.timestamp {
+    font-size: 0.9em;
+    color: #999;
+}
